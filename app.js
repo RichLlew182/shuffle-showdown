@@ -87,7 +87,9 @@ app.post('/search-artist', async (req, res) => {
 
         // console.log(topTracks)
 
-        const songNames = topTracks.map(track => track.name)
+        const limit = 5;
+
+        const songNames = topTracks.slice(0, limit).map(track => track.name)
 
        console.log(songNames)
 
