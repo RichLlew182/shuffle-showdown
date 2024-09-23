@@ -33,15 +33,28 @@
 
         <section>
 
+
+
             <% topTracks.forEach(track=> { %>
 
-                <div>
-                    <img src="<%= track.image %>" alt="" height="80" width="80">
-                    <%= track.name %> Duration: <%= track.duration_ms %> <a href="<%= track.url %>"
-                                target="_blank">Listen on Spotify</a>
-                </div>
+                <% const formatDuration=(milliseconds)=> {
+                    const minutes = Math.floor(milliseconds / 60000);
+                    const seconds = Math.floor((milliseconds % 60000) / 1000);
+                    return `${minutes}:${seconds < 10 ? '0' : '' }${seconds}`; }; const durationInMs=track.duration_ms;
+                        formattedDuration=formatDuration(durationInMs); %>
 
-                <% }) %>
+                        <div class="track">
+                            <img src="<%= track.image %>" alt="" height="80" width="80">
+                            <div class="track-info">
+                                <h4>
+                                    <%= track.name %>
+                                </h4>Duration: <%= formattedDuration %> <a href="<%= track.url %>"
+                                        target="_blank">Listen on
+                                        Spotify</a>
+                            </div>
+                        </div>
+
+                        <% }) %>
 
 
 
