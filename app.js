@@ -111,7 +111,7 @@ app.post('/search-artist', async (req, res) => {
 
         console.log({ appearsOn })
 
-        res.render('index.ejs', { artistInfo: artistInfo, image: artistImage, topTracks: topTrackInfo, appearsOn: appearsOn })
+        res.render('result.ejs', { artistInfo: artistInfo, image: artistImage, topTracks: topTrackInfo, appearsOn: appearsOn })
         
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);

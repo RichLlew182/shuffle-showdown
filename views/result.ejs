@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head', { title: 'Results Page' }) %>
+
+    <body>
+
+        <% if (locals.artistInfo) { %>
+            <h1>
+                <%= artistInfo.name %>
+            </h1>
+
+
+
+
+            <img src="<%= image %>" alt="" height="300" width="300">
+
+            <h2>
+                Followers: <%= artistInfo.followers.total %>
+            </h2>
+
+            <section id="topTracks">
+
+                <h3>Top 5 Tracks:</h3>
+                <% topTracks.forEach(track=> { %>
+
+                    <% const formatDuration=(milliseconds)=> {
+                        const minutes = Math.floor(milliseconds / 60000);
+                        const seconds = Math.floor((milliseconds % 60000) / 1000);
+                        return `${minutes}:${seconds < 10 ? '0' : '' }${seconds}`; }; const
+                            durationInMs=track.duration_ms; formattedDuration=formatDuration(durationInMs); %>
+
+                            <div class="track">
+                                <img src="<%= track.image %>" alt="" height="80" width="80">
+                                <div class="track-info">
+                                    <h4>
+                                        <%= track.name %>
+                                    </h4>Duration: <%= formattedDuration %> <a href="<%= track.url %>"
+                                            target="_blank">Listen on
+                                            Spotify</a>
+                                </div>
+                            </div>
+
+                            <% }) %>
+
+            </section>
+
+            <section id="appearsOn">
+
+                <h3>Appears On:</h3>
+                <% appearsOn.forEach(album=> { %>
+
+                    <div class="album">
+                        <img src="<%= album.image %>" alt="" height="80" width="80">
+                        <div class="album-info">
+                            <h4>
+                                <%= album.name %>
+                            </h4><a href="<%= album.url %>" target="_blank">Listen on
+                                Spotify</a>
+                        </div>
+                    </div>
+
+                    <% }) %>
+
+            </section>
+
+            <% } else { %>
+
+                <h1>No Results Found!</h1>
+
+                <% } %>
+
+
+
+
+    </body>
+
+</html>
