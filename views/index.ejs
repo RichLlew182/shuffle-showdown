@@ -11,11 +11,17 @@
 
 
     <form action="/search-artist" method="post">
-        <label for="artist-name">Artist Name:</label>
-        <input type="search" name="artist-name" id="artist-name" required
-            placeholder="Search for your favourite artist">
+        <label for="artistName">Artist Name:</label>
+        <input type="search" name="artistName" id="artistName" required placeholder="Search for your favourite artist">
         <button type="submit">Search</button>
     </form>
+
+    <% if (locals.artistName) { %>
+        <h1>
+            <%= artistName %>
+        </h1>
+
+        <% } %>
 
 
 

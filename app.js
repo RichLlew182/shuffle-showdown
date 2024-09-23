@@ -55,9 +55,16 @@ app.get('/', async (req, res) => {
 })
 
 app.post('/search-artist', (req, res) => {
-    console.log(req)
-    console.log(req.body);
-    res.render('index.ejs')
+
+
+    try {
+        const artistName = req.body.artistName;
+        res.render('index.ejs', {artistName : JSON.stringify(artistName)})
+        
+    } catch (error) {
+        console.error(error.response ? error.response.data : error.message);
+        res.status(500).send(error.message);
+    }
 })
 
 app.listen(port, () => {
