@@ -6,7 +6,7 @@ const port = 3000;
 
 const token = 'BQB7A5ph5qOYadEVyWbdrBLrJBXvl0nADeGvzM-8GA1Lw9qkFlI8vEYlJy3_GA1Aqy5dqbIMZWaZz7gMSSdAbYTEFYFhxZyibxEW_B0k0TgomTm-s9o';
 
-const apiURL = 'https://api.spotify.com/v1/search';
+const searchURL = 'https://api.spotify.com/v1/search';
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -58,7 +58,7 @@ app.post('/search-artist', async (req, res) => {
 
     try {
 
-        const result = await axios.get(apiURL, {
+        const firstResult = await axios.get(searchURL, {
             headers: {
                 Authorization: `Bearer ${token}`
             },
@@ -69,19 +69,29 @@ app.post('/search-artist', async (req, res) => {
             }
         },)
 
-        const artistInfo = result.data.artists.items[0];
+        const artistInfo = firstResult.data.artists.items[0];
 
-        console.log(artistInfo)
+        const artistImage = firstResult.data.artists.items[0].images[0].url;
 
-        const artistImage = result.data.artists.items[0].images[0].url;
+        const artistId = firstResult.data.artists.items[0].id;
 
+        const secondResult = await axios.get(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        },)
 
-        const artistId = result.data.artists.items[0].id;
+        // console.log(secondResult.data);
 
-        console.log(artistId)
+        const topTracks = secondResult.data.tracks;
 
+        // console.log(topTracks)
 
-        res.render('index.ejs', { artistInfo: artistInfo, image: artistImage })
+        const songNames = topTracks.map(track => track.name)
+
+       console.log(songNames)
+
+        res.render('index.ejs', { artistInfo: artistInfo, image: artistImage, topTracks: songNames })
         
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);
