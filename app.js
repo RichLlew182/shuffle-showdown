@@ -4,7 +4,7 @@ import axios from 'axios';
 const app = express();
 const port = 3000;
 
-const token = 'BQAlb3t5u-K2ixua1Q-JSbCQ-74aNMAynFu0Qjlzd0-Vslt-Pcq8i5V950pxg-gth3sGZur1J85eCXPP95KCh_IH_GZsxJBmE5ip1DcJ991-ay2T2A0';
+const token = 'BQB7A5ph5qOYadEVyWbdrBLrJBXvl0nADeGvzM-8GA1Lw9qkFlI8vEYlJy3_GA1Aqy5dqbIMZWaZz7gMSSdAbYTEFYFhxZyibxEW_B0k0TgomTm-s9o';
 
 const apiURL = 'https://api.spotify.com/v1/search';
 
@@ -54,7 +54,7 @@ app.get('/', async (req, res) => {
 app.post('/search-artist', async (req, res) => {
 
     const artistName = req.body.artistName;
-    console.log(artistName)
+    // console.log(artistName)
 
     try {
 
@@ -68,15 +68,20 @@ app.post('/search-artist', async (req, res) => {
                 limit: '1'
             }
         },)
-        
-        console.log(result.data.artists);
+
+        const artistInfo = result.data.artists.items[0];
+
+        console.log(artistInfo)
+
+        const artistImage = result.data.artists.items[0].images[0].url;
+
 
         const artistId = result.data.artists.items[0].id;
 
         console.log(artistId)
 
 
-        res.render('index.ejs', {artistName : JSON.stringify(artistName)})
+        res.render('index.ejs', { artistInfo: artistInfo, image: artistImage })
         
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);

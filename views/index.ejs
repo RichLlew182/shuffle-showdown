@@ -16,10 +16,19 @@
         <button type="submit">Search</button>
     </form>
 
-    <% if (locals.artistName) { %>
+    <% if (locals.artistInfo) { %>
         <h1>
-            <%= artistName %>
+            <%= artistInfo.name %>
         </h1>
+
+
+
+
+        <img src="<%= image %>" alt="" height="300" width="300">
+
+        <h2>
+            Followers: <%= artistInfo.followers.total %>
+        </h2>
 
         <% } %>
 
