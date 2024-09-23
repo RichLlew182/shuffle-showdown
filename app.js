@@ -1,5 +1,8 @@
 import express from 'express';
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config()
 
 const app = express();
 const port = 3000;
@@ -7,7 +10,7 @@ const port = 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
-const token = 'BQDnmx8PjgBTY6Fpt9m-KCZYZbVul49CupGPooHr2l5SusyzjPm1F6KLDrZ3YQmbDG3LHCGMPEwnN2czw1U1M4BbUzu6EFYstk89GPxImBmB7x3dmkk';
+const token = process.env.BEARER_TOKEN
 
 app.get('/', async (req, res) => {
 
