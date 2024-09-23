@@ -4,11 +4,14 @@ import axios from 'axios';
 const app = express();
 const port = 3000;
 
+
+
 const token = 'BQCjgQvJFUUagd3qI5WS5bAGxwsSuVV8l5BrPOLPZ_hDBRBcyVJUCN0P-p-YXimt4iSaEjIcWUKNjf4JXMBHtHbnxJaOXCWIuFcR7WXSfcQKonYrtdg';
 
 const searchURL = 'https://api.spotify.com/v1/search';
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'))
 
 app.get('/', async (req, res) => {
 

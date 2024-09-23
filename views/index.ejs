@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/resets.css">
     <title>Spotify App</title>
 </head>
 
@@ -29,12 +30,10 @@
         <h2>
             Followers: <%= artistInfo.followers.total %>
         </h2>
-        <h3>Top 5 Tracks:</h3>
 
-        <section>
+        <section id="topTracks">
 
-
-
+            <h3>Top 5 Tracks:</h3>
             <% topTracks.forEach(track=> { %>
 
                 <% const formatDuration=(milliseconds)=> {
@@ -56,9 +55,8 @@
 
                         <% }) %>
 
-
-
         </section>
+
 
 
 
