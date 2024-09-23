@@ -4,9 +4,9 @@ import axios from 'axios';
 const app = express();
 const port = 3000;
 
-const token = 'BQC0mNHLRIKCPSmb0IJon3xBgjs7lV9rRSgBdZ-scOY1hWuy-UhueyCwBxadfRiGUmTzWGnQ5gRPKs6XOb-KZG0it96hMojSdsv8gMtc2WSe52ebLIw';
+const token = 'BQAlb3t5u-K2ixua1Q-JSbCQ-74aNMAynFu0Qjlzd0-Vslt-Pcq8i5V950pxg-gth3sGZur1J85eCXPP95KCh_IH_GZsxJBmE5ip1DcJ991-ay2T2A0';
 
-const apiURL = 'https://api.spotify.com/v1/browse/categories'
+const apiURL = 'https://api.spotify.com/v1/browse/categories?limit=50'
 
 
 app.get('/', async (req, res) => {
@@ -20,15 +20,27 @@ app.get('/', async (req, res) => {
         }, );
     
         // console.log(result.data.categories.items);
+        
+        console.log(result.data.categories.items[0].icons);
 
         const categories = result.data.categories.items;
-        var array = []
+        var array = [];
 
-        for (let i = 0; i < categories.length; i++) {
-            array.push(categories[i].name);
-        }
+        categories.forEach(category => {
+            array.push({ name: category.name });
+            category.icons.forEach(icon => {
+                array.push({
+                    height: icon.height,
+                        url: icon.url,
+                    width: icon.width,
+
+                })
+            })
+            
+        });
 
         console.log(array)
+
     
         res.render('index.ejs', { categories: array });
         

@@ -9,15 +9,21 @@
 
 <body>
 
-    <ul>
-        <% categories.forEach(category=> { %>
 
-            <li>
-                <%= category %>
-            </li>
-            <% }) %>
+    <% categories.forEach(category=> { %>
 
-    </ul>
+        <p>
+            <%= category.name %><img src="<%= category.url %>" alt="" height="<%= category.width %>"
+                    width="<%= category.height %>">
+
+        </p>
+
+
+
+
+        <% }) %>
+
+
 
 </body>
 
