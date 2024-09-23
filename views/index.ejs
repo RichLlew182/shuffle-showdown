@@ -57,6 +57,25 @@
 
         </section>
 
+        <section id="appearsOn">
+
+            <h3>Appears On:</h3>
+            <% appearsOn.forEach(album=> { %>
+
+                <div class="album">
+                    <img src="<%= album.image %>" alt="" height="80" width="80">
+                    <div class="album-info">
+                        <h4>
+                            <%= album.name %>
+                        </h4><a href="<%= album.url %>" target="_blank">Listen on
+                            Spotify</a>
+                    </div>
+                </div>
+
+                <% }) %>
+
+        </section>
+
 
 
 

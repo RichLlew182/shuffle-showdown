@@ -4,14 +4,10 @@ import axios from 'axios';
 const app = express();
 const port = 3000;
 
-
-
-const token = 'BQCjgQvJFUUagd3qI5WS5bAGxwsSuVV8l5BrPOLPZ_hDBRBcyVJUCN0P-p-YXimt4iSaEjIcWUKNjf4JXMBHtHbnxJaOXCWIuFcR7WXSfcQKonYrtdg';
-
-const searchURL = 'https://api.spotify.com/v1/search';
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
+
+const token = 'BQCjgQvJFUUagd3qI5WS5bAGxwsSuVV8l5BrPOLPZ_hDBRBcyVJUCN0P-p-YXimt4iSaEjIcWUKNjf4JXMBHtHbnxJaOXCWIuFcR7WXSfcQKonYrtdg';
 
 app.get('/', async (req, res) => {
 
@@ -54,6 +50,8 @@ app.get('/', async (req, res) => {
     
 })
 
+const searchURL = 'https://api.spotify.com/v1/search';
+
 app.post('/search-artist', async (req, res) => {
 
     const artistName = req.body.artistName;
@@ -73,9 +71,7 @@ app.post('/search-artist', async (req, res) => {
         },)
 
         const artistInfo = firstResult.data.artists.items[0];
-
         const artistImage = firstResult.data.artists.items[0].images[0].url;
-
         const artistId = firstResult.data.artists.items[0].id;
 
         const secondResult = await axios.get(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
@@ -84,19 +80,38 @@ app.post('/search-artist', async (req, res) => {
             },
         },)
 
-         console.log(secondResult.data);
+        //  console.log(secondResult.data);
 
         const topTracks = secondResult.data.tracks;
 
-         console.log(topTracks)
+        //  console.log(topTracks)
 
         const limit = 5;
 
         const topTrackInfo = topTracks.slice(0, limit).map(track => ({ name: track.name, duration_ms: track.duration_ms, url: track.external_urls.spotify, image: track.album.images[0]?.url   }))
 
-       console.log(topTrackInfo)
+        // console.log(topTrackInfo);
 
-        res.render('index.ejs', { artistInfo: artistInfo, image: artistImage, topTracks: topTrackInfo })
+        const thirdResult = await axios.get(`https://api.spotify.com/v1/artists/${artistId}/albums`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                limit: 5,
+
+            }
+        },)
+
+        // console.log(thirdResult.data.items);
+
+        const albums = thirdResult.data.items;
+        console.log(albums)
+
+        const appearsOn = albums.map(album => ({name: album.name, url: album.external_urls.spotify, image: album.images[0]?.url}));
+
+        console.log({ appearsOn })
+
+        res.render('index.ejs', { artistInfo: artistInfo, image: artistImage, topTracks: topTrackInfo, appearsOn: appearsOn })
         
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);
