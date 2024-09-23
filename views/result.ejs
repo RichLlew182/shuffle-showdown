@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('partials/head', { title: 'Results Page' }) %>
+<%- include('partials/head', { title: 'Results' }) %>
 
     <body>
 
 
         <% if (locals.artistInfo) { %>
             <a href="/">Search Again</a>
-            <h1>
-                <%= artistInfo.name %>
-            </h1>
+            <section id="artistInfo">
+                <h1>
+                    <%= artistInfo.name %>
+                </h1>
 
-            <img src="<%= image %>" alt="" height="300" width="300">
+                <img src="<%= image %>" alt="" height="300" width="300">
 
-            <h2>
-                Followers: <%= artistInfo.followers.total %>
-            </h2>
+                <h2>
+                    Followers: <%= artistInfo.followers.total %> Popularity: <%= artistInfo.popularity %>
+                </h2>
+            </section>
 
             <section id="topTracks">
 

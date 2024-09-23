@@ -1,0 +1,29 @@
+:root {
+
+    --black: #121212;
+    --green: #1ED760;
+    --white: #FFFFFF;
+}
+
+body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    background-color: var(--black);
+    color: white;
+    padding: 100px;
+}
+
+h1 {
+    font-weight: 800;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 500;
+}
+
+a {
+    color: var(--green)
+}

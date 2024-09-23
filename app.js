@@ -7,7 +7,7 @@ const port = 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
-const token = 'BQCjgQvJFUUagd3qI5WS5bAGxwsSuVV8l5BrPOLPZ_hDBRBcyVJUCN0P-p-YXimt4iSaEjIcWUKNjf4JXMBHtHbnxJaOXCWIuFcR7WXSfcQKonYrtdg';
+const token = 'BQDnmx8PjgBTY6Fpt9m-KCZYZbVul49CupGPooHr2l5SusyzjPm1F6KLDrZ3YQmbDG3LHCGMPEwnN2czw1U1M4BbUzu6EFYstk89GPxImBmB7x3dmkk';
 
 app.get('/', async (req, res) => {
 
