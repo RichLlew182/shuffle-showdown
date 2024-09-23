@@ -7,7 +7,7 @@
 
         <% if (locals.artistInfo) { %>
             <a href="/">Search Again</a>
-            <section id="artistInfo">
+            <header id="artistInfo">
                 <h1>
                     <%= artistInfo.name %>
                 </h1>
@@ -17,7 +17,7 @@
                 <p>
                     Followers: <%= artistInfo.followers.total %> Popularity: <%= artistInfo.popularity %>
                 </p>
-            </section>
+            </header>
 
             <section id="topTracks">
 
