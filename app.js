@@ -41,8 +41,6 @@ app.get('/', async (req, res) => {
     //     });
 
     //     console.log(array)
-
-    
         res.render('index.ejs',);
         
     // } catch (error) {
@@ -51,14 +49,33 @@ app.get('/', async (req, res) => {
         
     // }
     
-   
 })
 
-app.post('/search-artist', (req, res) => {
+app.post('/search-artist', async (req, res) => {
 
+    const artistName = req.body.artistName;
+    console.log(artistName)
 
     try {
-        const artistName = req.body.artistName;
+
+        const result = await axios.get(apiURL, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            params: {
+                q: artistName,
+                type: "artist",
+                limit: '1'
+            }
+        },)
+        
+        console.log(result.data.artists);
+
+        const artistId = result.data.artists.items[0].id;
+
+        console.log(artistId)
+
+
         res.render('index.ejs', {artistName : JSON.stringify(artistName)})
         
     } catch (error) {
