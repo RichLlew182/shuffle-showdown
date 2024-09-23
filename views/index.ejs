@@ -10,18 +10,12 @@
 <body>
 
 
-    <% categories.forEach(category=> { %>
-
-        <p>
-            <%= category.name %><img src="<%= category.url %>" alt="" height="<%= category.width %>"
-                    width="<%= category.height %>">
-
-        </p>
-
-
-
-
-        <% }) %>
+    <form action="/search-artist" method="post">
+        <label for="artist-name">Artist Name:</label>
+        <input type="search" name="artist-name" id="artist-name" required
+            placeholder="Search for your favourite artist">
+        <button type="submit">Search</button>
+    </form>
 
 
 
