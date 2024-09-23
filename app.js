@@ -102,16 +102,25 @@ app.post('/search-artist', async (req, res) => {
             }
         },)
 
-        // console.log(thirdResult.data.items);
-
         const albums = thirdResult.data.items;
-        console.log(albums)
+        const appearsOn = albums.map(album => ({ name: album.name, url: album.external_urls.spotify, image: album.images[0]?.url }));
+        
+        const fourthResult = await axios.get(`https://api.spotify.com/v1/artists/${artistId}/related-artists`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+            
+        },)
 
-        const appearsOn = albums.map(album => ({name: album.name, url: album.external_urls.spotify, image: album.images[0]?.url}));
+        console.log(fourthResult.data.artists);
 
-        console.log({ appearsOn })
+        const relatedArtistData = fourthResult.data.artists;
 
-        res.render('result.ejs', { artistInfo: artistInfo, image: artistImage, topTracks: topTrackInfo, appearsOn: appearsOn })
+        const relatedArtists = relatedArtistData.map(artist => ({ name: artist.name, url: artist.external_urls.spotify, image: artist.images[0]?.url }));
+
+        console.log(relatedArtists)
+
+        res.render('result.ejs', { artistInfo: artistInfo, image: artistImage, topTracks: topTrackInfo, appearsOn: appearsOn, relatedArtists: relatedArtists })
         
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);

@@ -4,13 +4,12 @@
 
     <body>
 
+
         <% if (locals.artistInfo) { %>
+            <a href="/">Search Again</a>
             <h1>
                 <%= artistInfo.name %>
             </h1>
-
-
-
 
             <img src="<%= image %>" alt="" height="300" width="300">
 
@@ -63,14 +62,30 @@
 
             </section>
 
+            <section id="relatedArtists">
+
+                <h3>Appears On:</h3>
+                <% relatedArtists.forEach(artist=> { %>
+
+                    <div class="artist">
+                        <img src="<%= artist.image %>" alt="" height="80" width="80">
+                        <div class="artist-info">
+                            <h4>
+                                <%= artist.name %>
+                            </h4><a href="<%= artist.url %>" target="_blank">Listen on
+                                Spotify</a>
+                        </div>
+                    </div>
+
+                    <% }) %>
+
+            </section>
+
             <% } else { %>
 
                 <h1>No Results Found!</h1>
 
                 <% } %>
-
-
-
 
     </body>
 
