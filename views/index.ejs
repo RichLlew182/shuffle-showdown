@@ -9,9 +9,15 @@
 
 <body>
 
-    <h1>
-        <%= hello %>
-    </h1>
+    <ul>
+        <% categories.forEach(category=> { %>
+
+            <li>
+                <%= category %>
+            </li>
+            <% }) %>
+
+    </ul>
 
 </body>
 

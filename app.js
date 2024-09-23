@@ -9,8 +9,6 @@ const token = 'BQC0mNHLRIKCPSmb0IJon3xBgjs7lV9rRSgBdZ-scOY1hWuy-UhueyCwBxadfRiGU
 const apiURL = 'https://api.spotify.com/v1/browse/categories'
 
 
-
-
 app.get('/', async (req, res) => {
 
     try {
@@ -21,9 +19,18 @@ app.get('/', async (req, res) => {
             }
         }, );
     
-        console.log(result.data)
+        // console.log(result.data.categories.items);
+
+        const categories = result.data.categories.items;
+        var array = []
+
+        for (let i = 0; i < categories.length; i++) {
+            array.push(categories[i].name);
+        }
+
+        console.log(array)
     
-        res.render('index.ejs', { hello: 'Hello World!' });
+        res.render('index.ejs', { categories: array });
         
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);
