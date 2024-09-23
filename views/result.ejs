@@ -14,9 +14,9 @@
 
                 <img src="<%= image %>" alt="" height="300" width="300">
 
-                <h2>
+                <p>
                     Followers: <%= artistInfo.followers.total %> Popularity: <%= artistInfo.popularity %>
-                </h2>
+                </p>
             </section>
 
             <section id="topTracks">
@@ -30,7 +30,7 @@
                         return `${minutes}:${seconds < 10 ? '0' : '' }${seconds}`; }; const
                             durationInMs=track.duration_ms; formattedDuration=formatDuration(durationInMs); %>
 
-                            <div class="track">
+                            <div class="card track">
                                 <img src="<%= track.image %>" alt="" height="80" width="80">
                                 <div class="track-info">
                                     <h4>
@@ -50,7 +50,7 @@
                 <h3>Appears On:</h3>
                 <% appearsOn.forEach(album=> { %>
 
-                    <div class="album">
+                    <div class="card album">
                         <img src="<%= album.image %>" alt="" height="80" width="80">
                         <div class="album-info">
                             <h4>
@@ -69,7 +69,7 @@
                 <h3>Appears On:</h3>
                 <% relatedArtists.forEach(artist=> { %>
 
-                    <div class="artist">
+                    <div class="card artist">
                         <img src="<%= artist.image %>" alt="" height="80" width="80">
                         <div class="artist-info">
                             <h4>
