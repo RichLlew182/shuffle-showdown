@@ -31,19 +31,21 @@
         </h2>
         <h3>Top 5 Tracks:</h3>
 
-        <ul>
+        <section>
 
             <% topTracks.forEach(track=> { %>
 
-                <li>
-                    <%= track %>
-                </li>
+                <div>
+                    <img src="<%= track.image %>" alt="" height="80" width="80">
+                    <%= track.name %> Duration: <%= track.duration_ms %> <a href="<%= track.url %>"
+                                target="_blank">Listen on Spotify</a>
+                </div>
 
                 <% }) %>
 
 
 
-        </ul>
+        </section>
 
 
 

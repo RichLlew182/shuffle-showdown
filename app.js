@@ -4,7 +4,7 @@ import axios from 'axios';
 const app = express();
 const port = 3000;
 
-const token = 'BQB7A5ph5qOYadEVyWbdrBLrJBXvl0nADeGvzM-8GA1Lw9qkFlI8vEYlJy3_GA1Aqy5dqbIMZWaZz7gMSSdAbYTEFYFhxZyibxEW_B0k0TgomTm-s9o';
+const token = 'BQCjgQvJFUUagd3qI5WS5bAGxwsSuVV8l5BrPOLPZ_hDBRBcyVJUCN0P-p-YXimt4iSaEjIcWUKNjf4JXMBHtHbnxJaOXCWIuFcR7WXSfcQKonYrtdg';
 
 const searchURL = 'https://api.spotify.com/v1/search';
 
@@ -81,19 +81,19 @@ app.post('/search-artist', async (req, res) => {
             },
         },)
 
-        // console.log(secondResult.data);
+         console.log(secondResult.data);
 
         const topTracks = secondResult.data.tracks;
 
-        // console.log(topTracks)
+         console.log(topTracks)
 
         const limit = 5;
 
-        const songNames = topTracks.slice(0, limit).map(track => track.name)
+        const topTrackInfo = topTracks.slice(0, limit).map(track => ({ name: track.name, duration_ms: track.duration_ms, url: track.external_urls.spotify, image: track.album.images[0]?.url   }))
 
-       console.log(songNames)
+       console.log(topTrackInfo)
 
-        res.render('index.ejs', { artistInfo: artistInfo, image: artistImage, topTracks: songNames })
+        res.render('index.ejs', { artistInfo: artistInfo, image: artistImage, topTracks: topTrackInfo })
         
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);
