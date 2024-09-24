@@ -32,12 +32,20 @@ app.get('/', async (req, res) => {
 const authURL = 'https://accounts.spotify.com/authorize?';
 const redirect_uri = 'http://localhost:3000/callback'
 
+const scopes = [
+    'user-read-private',
+    'user-read-email',
+    'user-top-read'
+    // Add other required scopes here
+].join(' ');
+
+
 app.get('/authorize', async  (req, res) => {
 
         res.redirect(authURL + querystring.stringify({
         response_type: "code",
         client_id: clientID,
-        scope: "",
+        scope: scopes,
         redirect_uri: redirect_uri,
         }))
    
@@ -101,9 +109,12 @@ app.get('/profile', async (req, res) => {
     
     try {
 
-        const userInfo = await getData('/me')
+        const userInfo = await getData('/me');
+        const topTracks = await getData('/me/top/tracks?time_range=long_term&limit=10')
+
+        const topTracksData = topTracks.items.map(track => ({ artist: track.artists[0].name, name: track.name, duration_ms: track.duration_ms, url: track.external_urls.spotify, image: track.album.images[0]?.url }))
         
-        res.render('profile.ejs', {user: userInfo})
+        res.render('profile.ejs', {user: userInfo, tracks: topTracksData})
         
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);

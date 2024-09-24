@@ -12,6 +12,37 @@
                 <img class="rounded" src=" <%= user.images[1].url %>" alt="Profile Picture" height="200" width="200">
             </section>
 
+            <section id="topTracks">
+
+                <h3>Top 10 Tracks</h3>
+                <% tracks.forEach(track=> { %>
+
+                    <% const formatDuration=(milliseconds)=> {
+                        const minutes = Math.floor(milliseconds / 60000);
+                        const seconds = Math.floor((milliseconds % 60000) / 1000);
+                        return `${minutes}:${seconds < 10 ? '0' : '' }${seconds}`; }; const
+                            durationInMs=track.duration_ms; formattedDuration=formatDuration(durationInMs); %>
+
+                            <div class="card track">
+                                <a href="<%= track.url %>" target="_blank" alt="Listen on Spotify">
+                                    <img src="<%= track.image %>" alt="" height="80" width="80">
+                                    <div class="track-info">
+                                        <h4>
+                                            <%= track.name %>
+                                        </h4>
+                                        <p class="duration">
+                                            <%= track.artist %> -
+                                                <%= formattedDuration %>
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+
+
+                            <% }) %>
+
+            </section>
+
             <% } else { %>
 
                 <h1>No User Found!</h1>
