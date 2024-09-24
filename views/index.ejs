@@ -5,12 +5,16 @@
     <body>
         <h1>Search for your favourite artist</h1>
 
-        <form action="/search-artist" method="post">
-            <label class="hidden" for="artistName">Artist Name:</label>
-            <input type="search" name="artistName" id="artistName" required
-                placeholder="Search for your favourite artist">
-            <button type="submit">Search</button>
-        </form>
+        <div>
+            <form action="/search-artist" method="post">
+                <label class="hidden" for="artistName">Artist Name:</label>
+                <input type="search" name="artistName" id="artistName" required
+                    placeholder="Search for your favourite artist">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <section> <a class="btn" href="/authorize">Login to Spotify</a></section>
 
     </body>
 

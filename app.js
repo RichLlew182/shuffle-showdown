@@ -1,6 +1,7 @@
-import express from 'express';
+import express, { response } from 'express';
 import axios from 'axios';
 import dotenv from 'dotenv';
+import  querystring from 'querystring';
 
 dotenv.config()
 
@@ -22,10 +23,51 @@ app.get('/', async (req, res) => {
         
      } catch (error) {
          console.error(error.response ? error.response.data : error.message);
-         res.status(500).send('Error retrieving data from Spotify.');
+         res.status(500).send(error.message);
         
      }
     
+})
+
+const authURL = 'https://accounts.spotify.com/authorize?';
+const redirect_uri = 'http://localhost:3000/profile'
+
+app.get('/authorize', async  (req, res) => {
+
+        res.redirect(authURL + querystring.stringify({
+        response_type: "code",
+        client_id: clientID,
+        scope: "",
+        redirect_uri: redirect_uri,
+        }))
+   
+})
+
+const tokenURL = 'https://accounts.spotify.com/api/token'
+
+app.get('/profile', async (req, res) => {
+    
+    const code = req.query.code;
+
+    var body = new URLSearchParams({
+        code: code,
+        grant_type: 'authorization_code',
+        redirect_uri: redirect_uri,
+    })
+
+    const tokenResponse = await axios.post(tokenURL, body, {
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            'Authorization': 'Basic ' + (new Buffer.from(clientID + ':' + clientSecret).toString('base64'))
+        }
+    })
+    
+    console.log(tokenResponse.data);
+
+    const token = tokenResponse;
+
+    res.send(code)
+   
 })
 
 const searchURL = 'https://api.spotify.com/v1/search';
@@ -113,5 +155,5 @@ app.post('/search-artist', async (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Your app is listening on http://localhost:${port}`)
 })
