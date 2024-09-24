@@ -62,7 +62,7 @@ app.post('/search-artist', async (req, res) => {
 
     try {
 
-        const firstResult = await axios.get(searchURL, {
+        const searchArtist = await axios.get(searchURL, {
             headers: {
                 Authorization: `Bearer ${token}`
             },
@@ -74,22 +74,22 @@ app.post('/search-artist', async (req, res) => {
         },)
 
         const artistInfo = {
-            name: firstResult.data.artists.items[0].name,
-            image: firstResult.data.artists.items[0].images[0].url,
-            id: firstResult.data.artists.items[0].id,
-            followers: firstResult.data.artists.items[0].followers.total,
-            popularity: firstResult.data.artists.items[0].popularity
+            name: searchArtist.data.artists.items[0].name,
+            image: searchArtist.data.artists.items[0].images[0].url,
+            id: searchArtist.data.artists.items[0].id,
+            followers: searchArtist.data.artists.items[0].followers.total,
+            popularity: searchArtist.data.artists.items[0].popularity
         }
 
-        const secondResult = await axios.get(`https://api.spotify.com/v1/artists/${artistInfo.id}/top-tracks`, {
+        const searchTopTracks = await axios.get(`https://api.spotify.com/v1/artists/${artistInfo.id}/top-tracks`, {
             headers: {
                 Authorization: `Bearer ${token}`
             },
         },)
 
-        //  console.log(secondResult.data);
+        //  console.log(searchTopTracks.data);
 
-        const topTracks = secondResult.data.tracks;
+        const topTracks = searchTopTracks.data.tracks;
 
         //  console.log(topTracks)
 
@@ -99,7 +99,7 @@ app.post('/search-artist', async (req, res) => {
 
         // console.log(topTrackInfo);
 
-        const thirdResult = await axios.get(`https://api.spotify.com/v1/artists/${artistInfo.id}/albums`, {
+        const searchAppearsOn = await axios.get(`https://api.spotify.com/v1/artists/${artistInfo.id}/albums`, {
             headers: {
                 Authorization: `Bearer ${token}`
             },
@@ -110,10 +110,10 @@ app.post('/search-artist', async (req, res) => {
         },)
 
         
-        const albums = thirdResult.data.items;
+        const albums = searchAppearsOn.data.items;
         const appearsOn = albums.map(album => ({ name: album.name, url: album.external_urls.spotify, image: album.images[0]?.url }));
         
-        const fourthResult = await axios.get(`https://api.spotify.com/v1/artists/${artistInfo.id}/related-artists`, {
+        const searchRelatedArtists = await axios.get(`https://api.spotify.com/v1/artists/${artistInfo.id}/related-artists`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -122,7 +122,7 @@ app.post('/search-artist', async (req, res) => {
         
         const artistLimit = 10;
 
-        const relatedArtistData = fourthResult.data.artists;
+        const relatedArtistData = searchRelatedArtists.data.artists;
 
         const relatedArtists = relatedArtistData.slice(0, artistLimit).map(artist => ({ name: artist.name, url: artist.external_urls.spotify, image: artist.images[0]?.url }));
 
