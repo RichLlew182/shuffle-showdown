@@ -11,7 +11,7 @@ const port = 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
-const token = process.env.BEARER_TOKEN;
+// const token = process.env.BEARER_TOKEN;
 const clientID = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
@@ -30,7 +30,7 @@ app.get('/', async (req, res) => {
 })
 
 const authURL = 'https://accounts.spotify.com/authorize?';
-const redirect_uri = 'http://localhost:3000/profile'
+const redirect_uri = 'http://localhost:3000/callback'
 
 app.get('/authorize', async  (req, res) => {
 
@@ -45,7 +45,9 @@ app.get('/authorize', async  (req, res) => {
 
 const tokenURL = 'https://accounts.spotify.com/api/token'
 
-app.get('/profile', async (req, res) => {
+let token = ''
+
+app.get('/callback', async (req, res) => {
     
     const code = req.query.code;
 
@@ -55,19 +57,51 @@ app.get('/profile', async (req, res) => {
         redirect_uri: redirect_uri,
     })
 
-    const tokenResponse = await axios.post(tokenURL, body, {
+    try {
+        const tokenResponse = await axios.post(tokenURL, body, {
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
             'Authorization': 'Basic ' + (new Buffer.from(clientID + ':' + clientSecret).toString('base64'))
         }
     })
     
-    console.log(tokenResponse.data);
+    // console.log(tokenResponse.data);
 
-    const token = tokenResponse;
+    token = tokenResponse.data.access_token;
 
-    res.send(code)
+    res.redirect('/profile')    
+
+    }
+
+    catch (error) {
+    console.error(error.response ? error.response.data : error.message);
+    res.status(500).send(error.message);
    
+}
+   
+})
+
+const userProfileURL = 'https://api.spotify.com/v1/me'
+
+app.get('/profile', async (req, res) => {
+    
+    try {
+
+        const getUserProfile = await axios.get(userProfileURL, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        
+        const userProfileData = getUserProfile.data;
+        console.log(userProfileData)
+        res.render('profile.ejs', {userProfileData: userProfileData})
+        
+    } catch (error) {
+        console.error(error.response ? error.response.data : error.message);
+         res.status(500).send(error.message);
+    }
+    
 })
 
 const searchURL = 'https://api.spotify.com/v1/search';

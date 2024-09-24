@@ -3,7 +3,19 @@
 <%- include('partials/head', { title: 'Profile' }) %>
 
     <body>
-        <h1>Your Profile</h1>
+
+        <% if (locals.userProfileData) { %>
+
+            <h1>Welcome <%= userProfileData.display_name %>!
+            </h1>
+
+            <% } else { %>
+
+                <h1>No User Found!</h1>
+
+                <% } %>
+
+
 
     </body>
 
