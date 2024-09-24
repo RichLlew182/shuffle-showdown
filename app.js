@@ -73,11 +73,15 @@ app.post('/search-artist', async (req, res) => {
             }
         },)
 
-        const artistInfo = firstResult.data.artists.items[0];
-        const artistImage = firstResult.data.artists.items[0].images[0].url;
-        const artistId = firstResult.data.artists.items[0].id;
+        const artistInfo = {
+            name: firstResult.data.artists.items[0].name,
+            image: firstResult.data.artists.items[0].images[0].url,
+            id: firstResult.data.artists.items[0].id,
+            followers: firstResult.data.artists.items[0].followers.total,
+            popularity: firstResult.data.artists.items[0].popularity
+        }
 
-        const secondResult = await axios.get(`https://api.spotify.com/v1/artists/${artistId}/top-tracks`, {
+        const secondResult = await axios.get(`https://api.spotify.com/v1/artists/${artistInfo.id}/top-tracks`, {
             headers: {
                 Authorization: `Bearer ${token}`
             },
@@ -95,7 +99,7 @@ app.post('/search-artist', async (req, res) => {
 
         // console.log(topTrackInfo);
 
-        const thirdResult = await axios.get(`https://api.spotify.com/v1/artists/${artistId}/albums`, {
+        const thirdResult = await axios.get(`https://api.spotify.com/v1/artists/${artistInfo.id}/albums`, {
             headers: {
                 Authorization: `Bearer ${token}`
             },
@@ -109,7 +113,7 @@ app.post('/search-artist', async (req, res) => {
         const albums = thirdResult.data.items;
         const appearsOn = albums.map(album => ({ name: album.name, url: album.external_urls.spotify, image: album.images[0]?.url }));
         
-        const fourthResult = await axios.get(`https://api.spotify.com/v1/artists/${artistId}/related-artists`, {
+        const fourthResult = await axios.get(`https://api.spotify.com/v1/artists/${artistInfo.id}/related-artists`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -122,7 +126,7 @@ app.post('/search-artist', async (req, res) => {
 
         const relatedArtists = relatedArtistData.slice(0, artistLimit).map(artist => ({ name: artist.name, url: artist.external_urls.spotify, image: artist.images[0]?.url }));
 
-        res.render('result.ejs', { artistInfo: artistInfo, image: artistImage, topTracks: topTrackInfo, appearsOn: appearsOn, relatedArtists: relatedArtists })
+        res.render('result.ejs', { artistInfo: artistInfo, topTracks: topTrackInfo, appearsOn: appearsOn, relatedArtists: relatedArtists })
         
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);

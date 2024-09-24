@@ -85,12 +85,16 @@ button,
     min-width: 120px;
     cursor: pointer;
     margin-left: -5px;
+    border-radius: 500px;
 }
 
 input {
     padding: 12px;
     min-width: 500px;
+    background-color: #1f1f1f;
+    color: white;
     border: 1px solid var(--white);
+    border-radius: 500px;
 }
 
 .hidden {
