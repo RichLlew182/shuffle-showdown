@@ -81,11 +81,12 @@ button,
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    padding: 12px;
+    padding: 12px 20px;
     min-width: 120px;
     cursor: pointer;
     margin-left: -5px;
     border-radius: 500px;
+    display: inline-block
 }
 
 input {
