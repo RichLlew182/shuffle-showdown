@@ -21,7 +21,7 @@
 
             <section id="topTracks">
 
-                <h3>Top 5 Tracks:</h3>
+                <h3>Top 5 Tracks</h3>
                 <% topTracks.forEach(track=> { %>
 
                     <% const formatDuration=(milliseconds)=> {
@@ -31,15 +31,16 @@
                             durationInMs=track.duration_ms; formattedDuration=formatDuration(durationInMs); %>
 
                             <div class="card track">
-                                <img src="<%= track.image %>" alt="" height="80" width="80">
-                                <div class="track-info">
-                                    <h4>
-                                        <%= track.name %>
-                                    </h4>Duration: <%= formattedDuration %> <a href="<%= track.url %>"
-                                            target="_blank">Listen on
-                                            Spotify</a>
-                                </div>
+                                <a href="<%= track.url %>" target="_blank" alt="Listen on Spotify">
+                                    <img src="<%= track.image %>" alt="" height="80" width="80">
+                                    <div class="track-info">
+                                        <h4>
+                                            <%= track.name %>
+                                        </h4>Duration: <%= formattedDuration %>
+                                    </div>
+                                </a>
                             </div>
+
 
                             <% }) %>
 
@@ -47,17 +48,18 @@
 
             <section id="appearsOn">
 
-                <h3>Appears On:</h3>
+                <h3>Appears On</h3>
                 <% appearsOn.forEach(album=> { %>
 
                     <div class="card album">
-                        <img src="<%= album.image %>" alt="" height="80" width="80">
-                        <div class="album-info">
-                            <h4>
-                                <%= album.name %>
-                            </h4><a href="<%= album.url %>" target="_blank">Listen on
-                                Spotify</a>
-                        </div>
+                        <a href="<%= album.url %>" target="_blank" alt="Listen on Spotify">
+                            <img src="<%= album.image %>" alt="" height="80" width="80">
+                            <div class="album-info">
+                                <h4>
+                                    <%= album.name %>
+                                </h4>
+                            </div>
+                        </a>
                     </div>
 
                     <% }) %>
@@ -66,17 +68,18 @@
 
             <section id="relatedArtists">
 
-                <h3>Appears On:</h3>
+                <h3>Relatd Artists</h3>
                 <% relatedArtists.forEach(artist=> { %>
 
                     <div class="card artist">
-                        <img src="<%= artist.image %>" alt="" height="80" width="80">
-                        <div class="artist-info">
-                            <h4>
-                                <%= artist.name %>
-                            </h4><a href="<%= artist.url %>" target="_blank">Listen on
-                                Spotify</a>
-                        </div>
+                        <a href="<%= artist.url %>" target="_blank" alt="Listen on Spotify">
+                            <img class="rounded" src="<%= artist.image %>" alt="" height="80" width="80">
+                            <div class="artist-info">
+                                <h4>
+                                    <%= artist.name %>
+                                </h4>
+                            </div>
+                        </a>
                     </div>
 
                     <% }) %>
