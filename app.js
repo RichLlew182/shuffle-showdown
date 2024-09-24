@@ -1,6 +1,7 @@
 import express from 'express';
 import axios from 'axios';
 import dotenv from 'dotenv';
+import querystring from 'querystring'
 
 dotenv.config()
 
@@ -14,10 +15,32 @@ const token = process.env.BEARER_TOKEN;
 const clientID = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
+const generateRandomString = (length) => {
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const values = crypto.getRandomValues(new Uint8Array(length));
+    return values.reduce((acc, x) => acc + possible[x % possible.length], "");
+  }
+  
+const codeVerifier = generateRandomString(64);
+
+app.get('/login', function(req, res) {
+
+    var state = generateRandomString(16);
+    var scope = 'user-read-private user-read-email';
+  
+    res.redirect('https://accounts.spotify.com/authorize?' +
+      querystring.stringify({
+        response_type: 'code',
+        client_id: clientID,
+        scope: scope,
+        redirect_uri: 'http://localhost:3000/callback',
+        state: state
+      }));
+});
+
 app.get('/', async (req, res) => {
 
      try {
-
    
         res.render('index.ejs',);
         
@@ -27,6 +50,20 @@ app.get('/', async (req, res) => {
         
      }
     
+})
+
+app.get('/callback', async (req, res) => {
+
+    try {
+  
+       res.render('index.ejs',);
+       
+    } catch (error) {
+        console.error(error.response ? error.response.data : error.message);
+        res.status(500).send('Error retrieving data from Spotify.');
+       
+    }
+   
 })
 
 const searchURL = 'https://api.spotify.com/v1/search';
