@@ -15,7 +15,6 @@ body {
 
 h1 {
     font-weight: 800;
-    margin-bottom: 25px;
     font-size: 5.61rem;
     line-height: 1.2;
 }
@@ -26,6 +25,7 @@ h2 {
 
 h3 {
     font-size: 3.157rem;
+    margin-bottom: 15px;
 }
 
 h4 {
@@ -50,17 +50,17 @@ h4,
 h5,
 h6 {
     font-weight: 700;
-    margin-bottom: 15px;
     line-height: 1.2;
 }
 
 a {
-    color: var(--green)
+    color: white;
+    text-decoration: none;
 }
 
 section {
     margin: 25px 0;
-    border: 1px solid var(--white);
+    background-color: #1f1f1f;
     padding: 50px;
     border-radius: 25px;
     display: -webkit-box;
@@ -73,28 +73,36 @@ section {
     row-gap: 25px;
 }
 
-button {
+button,
+.btn {
     background-color: var(--green);
     color: var(--black);
     border: 1px solid var(--green);
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    padding: 12px;
+    padding: 12px 20px;
     min-width: 120px;
+    cursor: pointer;
+    margin-left: -5px;
+    border-radius: 500px;
+    display: inline-block
 }
 
 input {
     padding: 12px;
     min-width: 500px;
-    border: 1px solid var(--white);
+    background-color: #1f1f1f;
+    color: white;
+    border: 1px solid #1f1f1f;
+    border-radius: 500px;
 }
 
 .hidden {
     display: none;
 }
 
-.card {
+.card a {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -103,4 +111,38 @@ input {
     -ms-flex-direction: row;
     flex-direction: row;
     gap: 25px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.rounded {
+    aspect-ratio: 1/1;
+    height: auto;
+    border-radius: 50%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}
+
+.duration,
+.artists {
+    opacity: .7;
+    margin-top: 5px;
+}
+
+.results-title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 25px;
 }
