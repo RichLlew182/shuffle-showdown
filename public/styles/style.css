@@ -60,7 +60,7 @@ a {
 
 section {
     margin: 25px 0;
-    border: 1px solid var(--white);
+    background-color: #1f1f1f;
     padding: 50px;
     border-radius: 25px;
     display: -webkit-box;
@@ -123,7 +123,8 @@ input {
     object-fit: cover;
 }
 
-.duration {
+.duration,
+.artists {
     opacity: .7;
     margin-top: 5px;
 }
