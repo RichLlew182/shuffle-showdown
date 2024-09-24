@@ -93,7 +93,7 @@ input {
     min-width: 500px;
     background-color: #1f1f1f;
     color: white;
-    border: 1px solid var(--white);
+    border: 1px solid #1f1f1f;
     border-radius: 500px;
 }
 
@@ -119,6 +119,8 @@ input {
     aspect-ratio: 1/1;
     height: auto;
     border-radius: 50%;
+    -o-object-fit: cover;
+    object-fit: cover;
 }
 
 .duration {

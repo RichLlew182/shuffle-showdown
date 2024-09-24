@@ -10,46 +10,22 @@ const port = 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'))
 
-const token = process.env.BEARER_TOKEN
+const token = process.env.BEARER_TOKEN;
+const clientID = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 app.get('/', async (req, res) => {
 
-    // try {
+     try {
 
-    //     const result = await axios(apiURL, {
-    //         headers: {
-    //             Authorization: `Bearer ${token}`,
-    //         }
-    //     }, );
-    
-    //     // console.log(result.data.categories.items);
-        
-    //     console.log(result.data.categories.items[0].icons);
-
-    //     const categories = result.data.categories.items;
-    //     var array = [];
-
-    //     categories.forEach(category => {
-    //         array.push({ name: category.name });
-    //         category.icons.forEach(icon => {
-    //             array.push({
-    //                 height: icon.height,
-    //                     url: icon.url,
-    //                 width: icon.width,
-
-    //             })
-    //         })
-            
-    //     });
-
-    //     console.log(array)
+   
         res.render('index.ejs',);
         
-    // } catch (error) {
-    //     console.error(error.response ? error.response.data : error.message);
-    //     res.status(500).send('Error retrieving data from Spotify.');
+     } catch (error) {
+         console.error(error.response ? error.response.data : error.message);
+         res.status(500).send('Error retrieving data from Spotify.');
         
-    // }
+     }
     
 })
 
@@ -126,7 +102,7 @@ app.post('/search-artist', async (req, res) => {
 
         const relatedArtists = relatedArtistData.slice(0, artistLimit).map(artist => ({ name: artist.name, url: artist.external_urls.spotify, image: artist.images[0]?.url }));
 
-        res.render('result.ejs', { artistInfo: artistInfo, topTracks: topTrackInfo, appearsOn: appearsOn, relatedArtists: relatedArtists })
+        res.render('result.ejs', { artistInfo: artistInfo, topTrackInfo: topTrackInfo, appearsOn: appearsOn, relatedArtists: relatedArtists })
         
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);

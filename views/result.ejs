@@ -18,14 +18,14 @@
                 <img class="rounded" src="<%= artistInfo.image %>" alt="" height="300" width="300">
 
                 <p>
-                    Followers: <%= artistInfo.followers.total %> Popularity: <%= artistInfo.popularity %>
+                    Followers: <%= artistInfo.followers %> Popularity: <%= artistInfo.popularity %>
                 </p>
             </header>
 
             <section id="topTracks">
 
                 <h3>Top 5 Tracks</h3>
-                <% topTracks.forEach(track=> { %>
+                <% topTrackInfo.forEach(track=> { %>
 
                     <% const formatDuration=(milliseconds)=> {
                         const minutes = Math.floor(milliseconds / 60000);
