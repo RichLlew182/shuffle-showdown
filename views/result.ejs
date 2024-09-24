@@ -6,13 +6,16 @@
 
 
         <% if (locals.artistInfo) { %>
-            <a href="/">Search Again</a>
-            <header id="artistInfo">
-                <h1>
-                    <%= artistInfo.name %>
-                </h1>
 
-                <img src="<%= image %>" alt="" height="300" width="300">
+            <header id="artistInfo">
+                <div class="results-title">
+                    <h1>
+                        <%= artistInfo.name %>
+                    </h1>
+                    <a class="btn" href="/">Search Again</a>
+                </div>
+
+                <img class="rounded" src="<%= image %>" alt="" height="300" width="300">
 
                 <p>
                     Followers: <%= artistInfo.followers.total %> Popularity: <%= artistInfo.popularity %>
@@ -36,7 +39,10 @@
                                     <div class="track-info">
                                         <h4>
                                             <%= track.name %>
-                                        </h4>Duration: <%= formattedDuration %>
+                                        </h4>
+                                        <p class="duration">
+                                            <%= formattedDuration %>
+                                        </p>
                                     </div>
                                 </a>
                             </div>

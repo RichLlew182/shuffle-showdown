@@ -15,7 +15,6 @@ body {
 
 h1 {
     font-weight: 800;
-    margin-bottom: 25px;
     font-size: 5.61rem;
     line-height: 1.2;
 }
@@ -74,7 +73,8 @@ section {
     row-gap: 25px;
 }
 
-button {
+button,
+.btn {
     background-color: var(--green);
     color: var(--black);
     border: 1px solid var(--green);
@@ -83,6 +83,8 @@ button {
     appearance: none;
     padding: 12px;
     min-width: 120px;
+    cursor: pointer;
+    margin-left: -5px;
 }
 
 input {
@@ -113,4 +115,26 @@ input {
     aspect-ratio: 1/1;
     height: auto;
     border-radius: 50%;
+}
+
+.duration {
+    opacity: .7;
+    margin-top: 5px;
+}
+
+.results-title {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 25px;
 }

@@ -89,9 +89,9 @@ app.post('/search-artist', async (req, res) => {
 
         //  console.log(topTracks)
 
-        const limit = 5;
+        const trackLimit = 5;
 
-        const topTrackInfo = topTracks.slice(0, limit).map(track => ({ name: track.name, duration_ms: track.duration_ms, url: track.external_urls.spotify, image: track.album.images[0]?.url   }))
+        const topTrackInfo = topTracks.slice(0, trackLimit).map(track => ({ name: track.name, duration_ms: track.duration_ms, url: track.external_urls.spotify, image: track.album.images[0]?.url   }))
 
         // console.log(topTrackInfo);
 
@@ -105,6 +105,7 @@ app.post('/search-artist', async (req, res) => {
             }
         },)
 
+        
         const albums = thirdResult.data.items;
         const appearsOn = albums.map(album => ({ name: album.name, url: album.external_urls.spotify, image: album.images[0]?.url }));
         
@@ -114,14 +115,12 @@ app.post('/search-artist', async (req, res) => {
             }
             
         },)
-
-        console.log(fourthResult.data.artists);
+        
+        const artistLimit = 10;
 
         const relatedArtistData = fourthResult.data.artists;
 
-        const relatedArtists = relatedArtistData.map(artist => ({ name: artist.name, url: artist.external_urls.spotify, image: artist.images[0]?.url }));
-
-        console.log(relatedArtists)
+        const relatedArtists = relatedArtistData.slice(0, artistLimit).map(artist => ({ name: artist.name, url: artist.external_urls.spotify, image: artist.images[0]?.url }));
 
         res.render('result.ejs', { artistInfo: artistInfo, image: artistImage, topTracks: topTrackInfo, appearsOn: appearsOn, relatedArtists: relatedArtists })
         
