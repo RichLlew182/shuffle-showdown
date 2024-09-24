@@ -4,10 +4,13 @@
 
     <body>
 
-        <% if (locals.userProfileData) { %>
+        <% if (locals.user) { %>
 
-            <h1>Welcome <%= userProfileData.display_name %>!
-            </h1>
+            <section>
+                <h1>Welcome <%= user.display_name %>!
+                </h1>
+                <img class="rounded" src=" <%= user.images[1].url %>" alt="Profile Picture" height="200" width="200">
+            </section>
 
             <% } else { %>
 

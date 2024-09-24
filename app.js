@@ -81,21 +81,29 @@ app.get('/callback', async (req, res) => {
    
 })
 
-const userProfileURL = 'https://api.spotify.com/v1/me'
+const spotifyAPI = 'https://api.spotify.com/v1';
+
+async function getData(endpoint) {
+
+    const response = await axios.get(spotifyAPI + endpoint, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+
+    const data = response.data;
+    console.log(data);
+
+    return data
+}
 
 app.get('/profile', async (req, res) => {
     
     try {
 
-        const getUserProfile = await axios.get(userProfileURL, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        const userInfo = await getData('/me')
         
-        const userProfileData = getUserProfile.data;
-        console.log(userProfileData)
-        res.render('profile.ejs', {userProfileData: userProfileData})
+        res.render('profile.ejs', {user: userInfo})
         
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);
