@@ -29,7 +29,7 @@ app.get('/', async (req, res) => {
 })
 
 const authURL = 'https://accounts.spotify.com/authorize?';
-const redirect_uri = 'https://spotify-project-w77q.onrender.com/callback'
+const redirect_uri = process.env.REDIRECT_URI
 
 const scopes = [
     'user-read-private',
