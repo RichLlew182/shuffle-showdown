@@ -106,8 +106,16 @@ app.get('/questions', async (req, res) => {
     try {
 
         const userInfo = await getData('/me');
+        const likedSongs = await getData('/me/tracks?limit=10&offset=0');
+        
+        const artist = likedSongs.items[0].track.artists[0]?.name;
+        const preview = likedSongs.items[0].track.preview_url;
 
-        res.render('questions.ejs',{userInfo: userInfo})
+        console.log(likedSongs.items[0].track)
+        
+        res.render('questions.ejs', { userInfo: userInfo, likedSongs: likedSongs.items, preview: preview, artist: artist })
+        
+
 
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);

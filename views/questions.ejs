@@ -12,8 +12,15 @@
             <img src=" <%= userInfo.images[1].url %>" alt="">
         </header>
 
-        <h1>Questions</h1>
+        <h1>Who sings this song?</h1>
 
+        <% likedSongs.forEach(track=> { %>
+
+            <li>
+                <%= track.track.name %>
+            </li>
+
+            <% }) %>
 
 
 
