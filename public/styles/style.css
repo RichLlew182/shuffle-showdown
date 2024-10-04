@@ -9,35 +9,34 @@ body {
     font-family: "Plus Jakarta Sans", sans-serif;
     background-color: var(--black);
     color: white;
-    padding: 100px;
     font-size: 16px;
 }
 
 h1 {
     font-weight: 800;
-    font-size: 5.61rem;
+    font-size: 2.986rem;
     line-height: 1.2;
 }
 
 h2 {
-    font-size: 4.209rem
+    font-size: 2.488rem;
 }
 
 h3 {
-    font-size: 3.157rem;
+    font-size: 2.074rem;
     margin-bottom: 15px;
 }
 
 h4 {
-    font-size: 2.369rem;
+    font-size: 1.728rem;
 }
 
 h5 {
-    font-size: 1.777rem;
+    font-size: 1.44rem;
 }
 
 h6 {
-    font-size: 1.333rem
+    font-size: 1.2rem;
 }
 
 p {
@@ -58,19 +57,60 @@ a {
     text-decoration: none;
 }
 
+
+
+.flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.column {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+.justify-center {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.space-between {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.wrap {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.gap {
+    gap: 25px;
+}
+
 section {
-    margin: 25px 0;
+    margin: 50px 0;
     background-color: #1f1f1f;
     padding: 50px;
     border-radius: 25px;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
+    -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
     row-gap: 25px;
+    -webkit-transition: ease .3s;
+    -o-transition: ease .3s;
+    transition: ease .3s;
 }
 
 button,
@@ -84,36 +124,35 @@ button,
     padding: 12px 20px;
     min-width: 120px;
     cursor: pointer;
-    margin-left: -5px;
     border-radius: 500px;
-    display: inline-block
+    display: inline-block;
+    -webkit-transition: background-color 0.3s ease, border-color 0.3s ease;
+    -o-transition: background-color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    min-height: 50px;
+    text-align: center;
 }
 
-input {
-    padding: 12px;
-    min-width: 500px;
-    background-color: #1f1f1f;
+.answer-button {
+    background-color: white;
+    border-color: white;
+    text-transform: capitalize;
+    min-width: calc(50% - 25px);
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 0px;
+    flex: 1 1 0;
+}
+
+.incorrect {
+    background-color: red;
     color: white;
-    border: 1px solid #1f1f1f;
-    border-radius: 500px;
+    border-color: red;
 }
 
-.hidden {
-    display: none;
-}
-
-.card a {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    gap: 25px;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
+.correct {
+    background-color: var(--green);
+    color: white;
+    border-color: var(--green);
 }
 
 .rounded {
@@ -124,25 +163,185 @@ input {
     object-fit: cover;
 }
 
-.duration,
-.artists {
-    opacity: .7;
-    margin-top: 5px;
-}
-
-.results-title {
+#artist-answers {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    width: 100%;
+    height: 100%;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
     -ms-flex-direction: row;
     flex-direction: row;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    gap: 25px;
+    min-height: 275px;
+}
+
+#playButton {
+    display: none;
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.visualiser {
+    width: 200px;
+    -webkit-box-pack: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    margin-bottom: 25px;
+    height: 150px;
+    margin: 0 auto 25px;
+    display: none;
+}
+
+.line {
+    width: 15px;
+    height: 50px;
+    background-color: var(--green);
+    border-radius: 1rem;
+    -webkit-animation-play-state: paused !important;
+    animation-play-state: paused !important;
+}
+
+.line.running {
+    -webkit-animation-play-state: paused !important;
+    animation-play-state: paused !important;
+    height: 50px;
+}
+
+.line.running {
+    -webkit-animation-play-state: running !important;
+    animation-play-state: running !important;
+    height: 50px;
+}
+
+.line:nth-child(1) {
+    -webkit-animation: animateVisualiser 0.5s 0.6s infinite;
+    animation: animateVisualiser 0.5s 0.6s infinite;
+}
+
+.line:nth-child(2) {
+    -webkit-animation: animateVisualiser 0.5s 0.3s infinite;
+    animation: animateVisualiser 0.5s 0.3s infinite;
+}
+
+.line:nth-child(3) {
+    -webkit-animation: animateVisualiser 0.5s infinite;
+    animation: animateVisualiser 0.5s infinite;
+}
+
+.line:nth-child(4) {
+    -webkit-animation: animateVisualiser 0.5s 0.3s infinite;
+    animation: animateVisualiser 0.5s 0.3s infinite;
+}
+
+.line:nth-child(5) {
+    -webkit-animation: animateVisualiser 0.5s 0.6s infinite;
+    animation: animateVisualiser 0.5s 0.6s infinite;
+}
+
+
+@-webkit-keyframes animateVisualiser {
+    0% {
+        height: 50px
+    }
+
+    50% {
+        height: 150px;
+    }
+
+    100% {
+        height: 50px
+    }
+}
+
+
+@keyframes animateVisualiser {
+    0% {
+        height: 50px
+    }
+
+    50% {
+        height: 150px;
+    }
+
+    100% {
+        height: 50px
+    }
+}
+
+@media (max-width: 576px) {
+
+    .container {
+        width: 85%;
+    }
+
+    .btn,
+    button,
+    .answer-button {
+        min-width: 100%
+    }
+
+
+
+}
+
+@media (min-width: 576px) {
+
+    .container {
+        width: 500px;
+    }
+
+    .btn,
+    button,
+    .answer-button {
+        min-width: 100%
+    }
+
+
+
+}
+
+@media (min-width: 768px) {
+
+    .container {
+        width: 700px;
+    }
+
+    .btn,
+    button {
+        min-width: 0;
+    }
+
+    .answer-button {
+        min-width: calc(50% - 25px);
+    }
+
+    #artist-answers {
+        min-height: 125px;
+    }
+
+}
+
+@media (min-width: 992px) {
+
+    .container {
+        width: 900px;
+    }
+
+}
+
+@media (min-width: 1200px) {
+
+    .container {
+        width: 1100px;
+    }
+
 }
