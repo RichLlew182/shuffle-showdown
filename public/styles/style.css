@@ -92,20 +92,46 @@ button,
     transition: ease .3s;
 }
 
+#answerModal {
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transition: opacity .3s;
+    -o-transition: opacity .3s;
+    transition: opacity .3s;
+    position: absolute;
+    max-width: 500px;
+    max-height: 200px;
+    padding: 50px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    margin: auto;
+    inset: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
 .answer-button {
     background-color: white;
     border-color: white;
 }
 
 .incorrect {
-    background-color: red;
-    color: white;
+    background-color: red !important;
+    color: white !important;
     border-color: red;
 }
 
 .correct {
-    background-color: var(--green);
-    color: white;
+    background-color: var(--green) !important;
+    color: white !important;
     border-color: var(--green);
 }
 

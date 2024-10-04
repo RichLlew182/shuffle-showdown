@@ -70,6 +70,8 @@ const createAnswerButtons = (answers) => {
 
 }
 
+const answerModal = document.getElementById('answerModal')
+
 const checkAnswer = async () => {
 
     const answerButtons = document.querySelectorAll('.answer-button')
@@ -85,21 +87,27 @@ const checkAnswer = async () => {
             const correctAnswer = button.getAttribute('data-answer');
 
             if (correctAnswer === 'true') {
-                button.classList.add('correct')
+                button.classList.add('correct');
+                answerModal.style.opacity = '1';
+                answerModal.classList.add('correct')
+                answerModal.innerHTML = '<h3>Correct!</h3>'
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
+                    answerModal.style.opacity = '0';
                     nextQuestion()
-                }, 5000);
-
-
+                }, 2000);
 
             }
             else {
-                button.classList.add('incorrect')
+                button.classList.add('incorrect');
+                answerModal.style.opacity = '1';
+                answerModal.classList.add('incorrect')
+                answerModal.innerHTML = '<h3>Incorrect!</h3>'
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
-                    nextQuestion()
-                }, 5000);
+                    nextQuestion();
+                    answerModal.style.opacity = '0';
+                }, 2000);
 
             }
         })
