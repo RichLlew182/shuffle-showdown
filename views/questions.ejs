@@ -3,14 +3,7 @@
 <%- include('partials/head', { title: 'Search for Arist on Spotify' }) %>
 
     <body>
-        <!-- <header>
-            <ul>
-                <li>
-                    <%= userInfo.display_name %>
-                </li>
-            </ul>
-            <img src=" <%= userInfo.images[1].url %>" alt="">
-        </header> -->
+
 
         <h1>Who sings this song?</h1>
 
@@ -18,16 +11,7 @@
 
         <audio loop id="audioPlayer" src=" <%= preview %> "></audio>
 
-        <section>
-
-            <% answers.forEach(answer=> { %>
-
-                <button class="answer" data-artist-name="<%= answer.name %>" data-answer=" <%= answer.answer %>">
-                    <%= answer.name %>
-                </button>
-
-                <% }) %>
-
+        <section id="artist-answers">
 
 
         </section>

@@ -101,6 +101,8 @@ async function getData(endpoint) {
     return data
 }
 
+let artistArray = []
+let shuffledArray = []
 
 app.get('/questions', async (req, res) => {
 
@@ -153,17 +155,17 @@ app.get('/questions', async (req, res) => {
 
         // create array 
 
-        const artistArray = [{ name: artist, answer: 'correct' }];
+        artistArray = [{ name: artist, correct: 'true' }];
 
         for (let i = 0; i < 3; i++) {
-            artistArray.push({ name: relatedArtists.artists[i].name, answer: 'incorrect' });
+            artistArray.push({ name: relatedArtists.artists[i].name, correct: 'false' });
         }
 
         console.log({ artistArray })
 
         //* Shuffle Answers Array
 
-        const shuffledArray = artistArray.sort(() => Math.random() - 0.5);
+        shuffledArray = artistArray.sort(() => Math.random() - 0.5);
 
         // console.log({ artistID });
 
@@ -171,7 +173,9 @@ app.get('/questions', async (req, res) => {
 
         // console.log(likedSongs.items[0].track)
 
-        res.render('questions.ejs', { userInfo: userInfo, preview: preview, answers: shuffledArray })
+        res.render('questions.ejs', { preview: preview })
+
+        // res.render('questions.ejs', { userInfo: userInfo, preview: preview, answers: shuffledArray })
 
 
 
@@ -179,6 +183,12 @@ app.get('/questions', async (req, res) => {
         console.error(error.response ? error.response.data : error.message);
         res.status(500).send(error.message);
     }
+
+})
+
+app.get('/answers', (req, res) => {
+
+    res.json(shuffledArray)
 
 })
 
