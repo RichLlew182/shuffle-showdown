@@ -19,7 +19,6 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.21.0",
-    "querystring": "^0.2.1",
-    "serverless-http": "^3.2.0"
+    "querystring": "^0.2.1"
   }
 }
