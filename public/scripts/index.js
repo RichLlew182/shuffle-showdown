@@ -34,12 +34,13 @@ let artistAnswers = document.getElementById('artist-answers');
 
 const nextQuestion = async () => {
 
-
     try {
 
-        const response = await fetch('/answers');
-        const answers = await response.json();
+        const response = await fetch('/questions/data');
+        const { preview, answers } = await response.json();
         console.log(answers)
+
+        audioPlayer.src = preview;
 
         createAnswerButtons(answers)
 

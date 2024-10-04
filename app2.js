@@ -101,108 +101,83 @@ async function getData(endpoint) {
     return data
 }
 
-let artistArray = []
-let shuffledArray = []
+const generateQuizData = async () => {
+
+    const userInfo = await getData('/me');
+
+    let likedSongsLength = await getData(`/me/tracks?limit=1`);
+
+    likedSongsLength = likedSongsLength.total;
+
+    //Calculcate offset Max by dividing number of liked songs by 5
+
+    let offsetMax = Math.floor(likedSongsLength / 5);
+
+    // Generate random offset value by muliplying random number between 0 and 1 by offset max
+
+    let offset = Math.floor(Math.random() * offsetMax);
+
+    // Fetch songs with this offset value
+
+    const likedSongs = await getData(`/me/tracks?limit=5&offset=${offset}`);
+
+    // generate number between 1 and 5
+
+    const randomInt = Math.floor(Math.random() * 5);
+
+    // Use random number to pick an artist randomly from the 5 retrieved artists, then store the ID and preview link
+
+    const artist = likedSongs.items[randomInt].track.artists[0].name;
+    const artistID = likedSongs.items[randomInt].track.artists[0]?.id;
+    const preview = likedSongs.items[randomInt].track.preview_url;
+
+    // fetch related artists using artist ID
+
+    let relatedArtists = await getData(`/artists/${artistID}/related-artists`);
+    relatedArtists = relatedArtists.artists;
+
+    // Shuffle this array so the related artists aren't so close to the original artist
+
+    const shuffledArtists = relatedArtists.sort(() => Math.random() - 0.5);
+
+    // Add original artist to array as the correct answer
+
+    const artistArray = [{ name: artist, correct: 'true' }];
+
+    // Add 3 related artists to the artist array
+
+    for (let i = 0; i < 3; i++) {
+        artistArray.push({ name: shuffledArtists[i].name, correct: 'false' });
+    }
+
+    // Shuffle the Artist array so the correct answer isn't always first
+
+    const shuffledArray = artistArray.sort(() => Math.random() - 0.5);
+
+    // return preview url and shuffled array
+
+    return { preview, shuffledArray };
+};
 
 app.get('/questions', async (req, res) => {
-
     try {
-
-        const userInfo = await getData('/me');
-
-        let likedSongsLength = await getData(`/me/tracks?limit=1`);
-
-        likedSongsLength = likedSongsLength.total;
-
-        console.log({ likedSongsLength })
-
-        // Take length of liked songs then divide by 5 to get the maximum offset value, meaning songs are always received
-
-        let offsetMax = Math.floor(likedSongsLength / 5);
-
-        // Create random number then times by the max offset value to get a random block of 5 arists
-
-        let offset = Math.floor(Math.random() * offsetMax)
-
-        console.log({ offset })
-
-        // call getData function to retrieve a block of 5 tracks using the random offset value
-
-        const likedSongs = await getData(`/me/tracks?limit=10&offset=${offset}`);
-
-        // console.log(likedSongs.items)
-
-        // Generate random number between 1 and 5 to be used to pick 1 of the 5 artists we receive
-
-        const randomInt = Math.floor(Math.random() * 5);
-
-        // console.log({ randomInt })
-
-        // Choose artist/track using the random int
-
-        const artist = likedSongs.items[randomInt].track.artists[0].name;
-
-        console.log({ artist })
-
-        // store artist ID and preview of the track
-
-        const artistID = likedSongs.items[randomInt].track.artists[0]?.id;
-        const preview = likedSongs.items[randomInt].track.preview_url;
-
-        // retrieve related artists using the artist ID, these will be used as the incorrect answers
-
-        let relatedArtists = await getData(`/artists/${artistID}/related-artists`);
-
-        relatedArtists = relatedArtists.artists;
-
-        console.log({ relatedArtists })
-
-        // Shuffle related artists first before choosing 3
-
-        const shuffledArtists = relatedArtists.sort(() => Math.random() - 0.5);
-
-        console.log({ shuffledArtists })
-
-        // create array 
-
-        artistArray = [{ name: artist, correct: 'true' }];
-
-        // Push 3 related artists to the artist array
-
-        for (let i = 0; i < 3; i++) {
-            artistArray.push({ name: shuffledArtists[i].name, correct: 'false' });
-        }
-
-        console.log({ artistArray })
-
-        //* Shuffle Answers Array
-
-        shuffledArray = artistArray.sort(() => Math.random() - 0.5);
-
-        // console.log({ artistID });
-
-        // console.log(relatedArtists.artists)
-
-        // console.log(likedSongs.items[0].track)
-
-        res.render('questions.ejs', { preview: preview })
-
-        // res.render('questions.ejs', { userInfo: userInfo, preview: preview, answers: shuffledArray })
-
-
-
+        const { preview } = await generateQuizData();
+        res.render('questions.ejs', { preview });
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);
         res.status(500).send(error.message);
     }
+});
 
-})
-
-app.get('/answers', (req, res) => {
-
-    res.json(shuffledArray)
-
-})
+app.get('/questions/data', async (req, res) => {
+    try {
+        const { preview, shuffledArray } = await generateQuizData();
+        res.json({ preview, answers: shuffledArray });
+    } catch (error) {
+        console.error(error.response ? error.response.data : error.message);
+        res.status(500).send(error.message);
+    }
+});
 
 
 app.listen(port, () => {
