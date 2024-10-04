@@ -107,26 +107,63 @@ app.get('/questions', async (req, res) => {
     try {
 
         const userInfo = await getData('/me');
-        const likedSongs = await getData('/me/tracks?limit=10&offset=0');
 
+        let likedSongsLength = await getData(`/me/tracks?limit=1`);
 
-        const artist = likedSongs.items[0].track.artists[0]?.name;
-        const artistID = likedSongs.items[0].track.artists[0]?.id;
-        const preview = likedSongs.items[0].track.preview_url;
+        likedSongsLength = likedSongsLength.total;
+
+        console.log({ likedSongsLength })
+
+        // Take length of liked songs then divide by 5 to get the maximum offset value, meaning songs are always received
+
+        let offsetMax = Math.floor(likedSongsLength / 5);
+
+        // Create random number then times by the max offset value to get a random block of 5 arists
+
+        let offset = Math.floor(Math.random() * offsetMax)
+
+        console.log({ offset })
+
+        // call getData function to retrieve a block of 5 tracks using the random offset value
+
+        const likedSongs = await getData(`/me/tracks?limit=10&offset=${offset}`);
+
+        console.log(likedSongs.items)
+
+        // Generate random number between 1 and 5 to be used to pick 1 of the 5 artists we receive
+
+        const randomInt = Math.floor(Math.random() * 5);
+
+        console.log({ randomInt })
+
+        // Choose artist/track using the random int
+
+        const artist = likedSongs.items[randomInt].track.artists[0].name;
+
+        console.log({ artist })
+
+        // store artist ID and preview of the track
+
+        const artistID = likedSongs.items[randomInt].track.artists[0]?.id;
+        const preview = likedSongs.items[randomInt].track.preview_url;
+
+        // retrieve related artists using the artist ID, these will be used as the incorrect answers
 
         const relatedArtists = await getData(`/artists/${artistID}/related-artists`);
 
-        console.log(relatedArtists.artists)
+        // create array 
 
-        const artistArray = [artist];
-
+        const artistArray = [{ name: artist, answer: 'correct' }];
 
         for (let i = 0; i < 3; i++) {
-            artistArray.push(relatedArtists.artists[i].name);
-
+            artistArray.push({ name: relatedArtists.artists[i].name, answer: 'incorrect' });
         }
 
         console.log({ artistArray })
+
+        //* Shuffle Answers Array
+
+        const shuffledArray = artistArray.sort(() => Math.random() - 0.5);
 
         // console.log({ artistID });
 
@@ -134,7 +171,7 @@ app.get('/questions', async (req, res) => {
 
         // console.log(likedSongs.items[0].track)
 
-        res.render('questions.ejs', { userInfo: userInfo, likedSongs: likedSongs.items, preview: preview, artist: artist, answers: artistArray })
+        res.render('questions.ejs', { userInfo: userInfo, preview: preview, answers: shuffledArray })
 
 
 

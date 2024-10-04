@@ -22,8 +22,8 @@
 
             <% answers.forEach(answer=> { %>
 
-                <button class="answer" data-artist-name="<%= answer %>">
-                    <%= answer %>
+                <button class="answer" data-artist-name="<%= answer.name %>" data-answer=" <%= answer.answer %>">
+                    <%= answer.name %>
                 </button>
 
                 <% }) %>
