@@ -96,10 +96,11 @@ async function getData(endpoint) {
     })
 
     const data = response.data;
-    console.log(data);
+    // console.log({ data });
 
     return data
 }
+
 
 app.get('/questions', async (req, res) => {
 
@@ -108,13 +109,32 @@ app.get('/questions', async (req, res) => {
         const userInfo = await getData('/me');
         const likedSongs = await getData('/me/tracks?limit=10&offset=0');
 
+
         const artist = likedSongs.items[0].track.artists[0]?.name;
+        const artistID = likedSongs.items[0].track.artists[0]?.id;
         const preview = likedSongs.items[0].track.preview_url;
 
+        const relatedArtists = await getData(`/artists/${artistID}/related-artists`);
 
-        console.log(likedSongs.items[0].track)
+        console.log(relatedArtists.artists)
 
-        res.render('questions.ejs', { userInfo: userInfo, likedSongs: likedSongs.items, preview: preview, artist: artist })
+        const artistArray = [artist];
+
+
+        for (let i = 0; i < 3; i++) {
+            artistArray.push(relatedArtists.artists[i].name);
+
+        }
+
+        console.log({ artistArray })
+
+        // console.log({ artistID });
+
+        // console.log(relatedArtists.artists)
+
+        // console.log(likedSongs.items[0].track)
+
+        res.render('questions.ejs', { userInfo: userInfo, likedSongs: likedSongs.items, preview: preview, artist: artist, answers: artistArray })
 
 
 

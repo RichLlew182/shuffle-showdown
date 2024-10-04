@@ -3,21 +3,34 @@
 <%- include('partials/head', { title: 'Search for Arist on Spotify' }) %>
 
     <body>
-        <header>
+        <!-- <header>
             <ul>
                 <li>
                     <%= userInfo.display_name %>
                 </li>
             </ul>
             <img src=" <%= userInfo.images[1].url %>" alt="">
-        </header>
+        </header> -->
 
         <h1>Who sings this song?</h1>
 
-        <button id="playButton" %> >Play Song </button>
+        <button id="playButton" %> >Pause Song </button>
 
-        <audio id="audioPlayer" src=" <%= preview %> "></audio>
+        <audio loop id="audioPlayer" src=" <%= preview %> "></audio>
 
+        <section>
+
+            <% answers.forEach(answer=> { %>
+
+                <button class="answer" data-artist-name="<%= answer %>">
+                    <%= answer %>
+                </button>
+
+                <% }) %>
+
+
+
+        </section>
 
 
         <script src="/scripts/index.js"></script>
