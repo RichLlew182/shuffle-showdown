@@ -76,25 +76,31 @@ const checkAnswer = async () => {
 
     answerButtons.forEach((button) => {
 
-        console.log(button.getAttribute('data-answer'))
-
         button.addEventListener('click', () => {
 
+            answerButtons.forEach((btn) => {
+                btn.setAttribute('disabled', true)
+            })
 
             const correctAnswer = button.getAttribute('data-answer');
 
-
             if (correctAnswer === 'true') {
-                alert('Correct');
-                artistAnswers.innerHTML = '';
-                nextQuestion()
+                button.classList.add('correct')
+                setTimeout(() => {
+                    artistAnswers.innerHTML = '';
+                    nextQuestion()
+                }, 5000);
+
 
 
             }
             else {
-                alert('Incorrect');
-                artistAnswers.innerHTML = '';
-                nextQuestion()
+                button.classList.add('incorrect')
+                setTimeout(() => {
+                    artistAnswers.innerHTML = '';
+                    nextQuestion()
+                }, 5000);
+
             }
         })
 

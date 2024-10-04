@@ -130,13 +130,13 @@ app.get('/questions', async (req, res) => {
 
         const likedSongs = await getData(`/me/tracks?limit=10&offset=${offset}`);
 
-        console.log(likedSongs.items)
+        // console.log(likedSongs.items)
 
         // Generate random number between 1 and 5 to be used to pick 1 of the 5 artists we receive
 
         const randomInt = Math.floor(Math.random() * 5);
 
-        console.log({ randomInt })
+        // console.log({ randomInt })
 
         // Choose artist/track using the random int
 
@@ -151,14 +151,26 @@ app.get('/questions', async (req, res) => {
 
         // retrieve related artists using the artist ID, these will be used as the incorrect answers
 
-        const relatedArtists = await getData(`/artists/${artistID}/related-artists`);
+        let relatedArtists = await getData(`/artists/${artistID}/related-artists`);
+
+        relatedArtists = relatedArtists.artists;
+
+        console.log({ relatedArtists })
+
+        // Shuffle related artists first before choosing 3
+
+        const shuffledArtists = relatedArtists.sort(() => Math.random() - 0.5);
+
+        console.log({ shuffledArtists })
 
         // create array 
 
         artistArray = [{ name: artist, correct: 'true' }];
 
+        // Push 3 related artists to the artist array
+
         for (let i = 0; i < 3; i++) {
-            artistArray.push({ name: relatedArtists.artists[i].name, correct: 'false' });
+            artistArray.push({ name: shuffledArtists[i].name, correct: 'false' });
         }
 
         console.log({ artistArray })

@@ -86,7 +86,27 @@ button,
     cursor: pointer;
     margin-left: -5px;
     border-radius: 500px;
-    display: inline-block
+    display: inline-block;
+    -webkit-transition: ease .3s;
+    -o-transition: ease .3s;
+    transition: ease .3s;
+}
+
+.answer-button {
+    background-color: white;
+    border-color: white;
+}
+
+.incorrect {
+    background-color: red;
+    color: white;
+    border-color: red;
+}
+
+.correct {
+    background-color: var(--green);
+    color: white;
+    border-color: var(--green);
 }
 
 input {
