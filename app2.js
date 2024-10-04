@@ -107,14 +107,15 @@ app.get('/questions', async (req, res) => {
 
         const userInfo = await getData('/me');
         const likedSongs = await getData('/me/tracks?limit=10&offset=0');
-        
+
         const artist = likedSongs.items[0].track.artists[0]?.name;
         const preview = likedSongs.items[0].track.preview_url;
 
+
         console.log(likedSongs.items[0].track)
-        
+
         res.render('questions.ejs', { userInfo: userInfo, likedSongs: likedSongs.items, preview: preview, artist: artist })
-        
+
 
 
     } catch (error) {
