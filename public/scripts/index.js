@@ -131,7 +131,7 @@ startButton.addEventListener('click', function () {
 
     setTimeout(() => {
         visualiser.style.display = 'flex';
-    }, 500);
+    }, 750);
 
 
 
