@@ -53,8 +53,6 @@ const nextQuestion = async () => {
 
 }
 
-window.addEventListener('load', nextQuestion())
-
 const createAnswerButtons = (answers) => {
 
     const container = document.getElementById('artist-answers');
@@ -71,8 +69,6 @@ const createAnswerButtons = (answers) => {
 
 }
 
-const answerModal = document.getElementById('answerModal')
-
 const checkAnswer = async () => {
 
     const answerButtons = document.querySelectorAll('.answer-button')
@@ -85,29 +81,23 @@ const checkAnswer = async () => {
                 btn.setAttribute('disabled', true)
             })
 
-            const correctAnswer = button.getAttribute('data-answer');
+            const answerData = button.getAttribute('data-answer');
 
-            if (correctAnswer === 'true') {
+            if (answerData === 'true') {
                 button.classList.add('correct');
-                answerModal.style.opacity = '1';
-                answerModal.classList.add('correct')
-                answerModal.innerHTML = '<h3>Correct!</h3>'
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
-                    answerModal.style.opacity = '0';
                     nextQuestion()
                 }, 2000);
 
             }
             else {
                 button.classList.add('incorrect');
-                answerModal.style.opacity = '1';
-                answerModal.classList.add('incorrect')
-                answerModal.innerHTML = '<h3>Incorrect!</h3>'
+                const correctButton = document.querySelector('[data-answer="true"]');
+                correctButton.classList.add('correct');
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
                     nextQuestion();
-                    answerModal.style.opacity = '0';
                 }, 2000);
 
             }
@@ -117,8 +107,7 @@ const checkAnswer = async () => {
 
 }
 
-
-
+window.addEventListener('load', nextQuestion())
 
 
 

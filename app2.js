@@ -96,7 +96,6 @@ async function getData(endpoint) {
     })
 
     const data = response.data;
-    // console.log({ data });
 
     return data
 }
