@@ -18,7 +18,7 @@ app.get('/', async (req, res) => {
 
     try {
 
-        res.render('quiz.ejs',);
+        res.render('login.ejs',);
 
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);

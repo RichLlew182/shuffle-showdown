@@ -1,36 +1,15 @@
 const playButton = document.getElementById('playButton');
 
+playButton.style.display = 'none'
+
 const audioPlayer = document.getElementById('audioPlayer');
 
-audioPlayer.addEventListener('loadeddata', () => {
-
-    audioPlayer.play();
-    playButton.addEventListener('click', () => {
-        audioPlayer.pause();
-        playButton.textContent = 'Play Song'
-    })
-
-})
-
-audioPlayer.addEventListener('pause', () => {
-
-    playButton.addEventListener('click', () => {
-        audioPlayer.play();
-        playButton.textContent = 'Pause Song'
-    })
-
-})
-
-audioPlayer.addEventListener('play', () => {
-
-    playButton.addEventListener('click', () => {
-        audioPlayer.pause();
-        playButton.textContent = 'Play Song'
-    })
-
-})
-
 let artistAnswers = document.getElementById('artist-answers');
+
+let visualiser = document.querySelector('.visualiser');
+let visLines = document.querySelectorAll('.line');
+
+console.log(visLines)
 
 const nextQuestion = async () => {
 
@@ -107,7 +86,58 @@ const checkAnswer = async () => {
 
 }
 
-window.addEventListener('load', nextQuestion())
+const startButton = document.getElementById('startGame')
+
+startButton.addEventListener('click', function () {
+
+    startButton.style.display = 'none';
+    playButton.style.display = 'block';
+
+
+    audioPlayer.addEventListener('loadeddata', () => {
+
+        audioPlayer.play();
+        playButton.addEventListener('click', () => {
+            audioPlayer.pause();
+
+            playButton.textContent = 'Play Song'
+        })
+
+    })
+
+    audioPlayer.addEventListener('pause', () => {
+
+        playButton.addEventListener('click', () => {
+            audioPlayer.play();
+            visLines.forEach((line) => {
+                line.classList.add('running')
+            })
+            playButton.textContent = 'Pause Song'
+        })
+
+    })
+
+    audioPlayer.addEventListener('play', () => {
+
+        playButton.addEventListener('click', () => {
+            audioPlayer.pause();
+            visLines.forEach((line) => {
+                line.classList.remove('running')
+            })
+            playButton.textContent = 'Play Song'
+        })
+
+    })
+
+    setTimeout(() => {
+        visualiser.style.display = 'flex';
+    }, 500);
+
+
+
+    nextQuestion()
+
+})
 
 
 
