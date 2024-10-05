@@ -110,7 +110,7 @@ const generateQuizData = async () => {
 
     //Calculcate offset Max by dividing number of liked songs by 5
 
-    let offsetMax = Math.floor(likedSongsLength / 5);
+    let offsetMax = likedSongsLength -5
 
     // Generate random offset value by muliplying random number between 0 and 1 by offset max
 
