@@ -2,21 +2,34 @@
 <html lang="en">
 <%- include('partials/head', { title: 'Final Score | Shuffle Showdown' }) %>
 
-
-
     <body class="flex column justify-center">
 
-        <section class="container flex column align-center justify-center gap">
-            <h1>Final Score: <%= score %>
+        <section class="container flex column align-center justify-center gap text-center">
+            <h1>Final Score: <%= finalScore %>
             </h1>
 
-            <div class="flex row gap"> <a class="btn bg-green" href="/questions">Play Again</a><a class="btn bg-white"
-                    href="/leaderboard">View
-                    Leaderboard</a></div>
+            <% if (finalScore <=100) { %>
+                <h2>Oof! Better luck next time!</h2>
+
+                <% } else if (finalScore> 100 && finalScore <= 500) { %>
+
+                        <h2>Good Effort! But there's always room for improvement!</h2>
+
+                        <% } else { %>
+
+                            <h2>Amazing! You really know your stuff!</h2>
+
+                            <% } %>
+
+
+
+
+                                <div id="endAction" class="flex row gap mt-25"> <a class="btn bg-green"
+                                        href="/questions">Play
+                                        Again</a><a class="btn bg-white" href="#">View
+                                        Highscores</a></div>
 
         </section>
-
-
 
     </body>
 

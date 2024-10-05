@@ -9,7 +9,8 @@ const app = express();
 const port = 3000;
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'))
+app.use(express.static('public'));
+app.use(express.json())
 
 const clientID = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
@@ -163,6 +164,7 @@ app.get('/questions', async (req, res) => {
         res.render('questions.ejs');
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);
+        res.redirect('/login')
         res.status(500).send(error.message);
     }
 });
@@ -180,20 +182,17 @@ app.get('/questions/data', async (req, res) => {
 let finalScore = ''
 
 app.post('/score', (req, res) => {
+    console.log(req.body.score);
 
-    const { score } = req.body;
-    finalScore = score;
-    console.log({ finalScore })
+     finalScore = req.body.score
 
-        res.redirect('/score');
-    }
-)
+    res.redirect('/score')
+})
 
 app.get('/score', (req, res) => {
-    res.render('score.ejs', { score: finalScore }); // Render the score page with the score
+
+    res.render('score.ejs', {finalScore: finalScore}); // Render the score page with the score
 });
-
-
 
 
 app.listen(port, () => {

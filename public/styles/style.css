@@ -110,6 +110,10 @@ a {
     gap: 25px;
 }
 
+.mt-25 {
+    margin-top: 25px;
+}
+
 .mt-50 {
     margin-top: 50px;
 }

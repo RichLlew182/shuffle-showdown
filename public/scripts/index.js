@@ -14,8 +14,8 @@ let count = 1;
 let gameInfo = document.getElementById('gameInfo')
 
 let roundNumber = document.getElementById('roundNumber');
-let timeCounter = document.getElementById('timerCounter')
-let scoreCounter = document.getElementById('scoreCounter')
+let timeCounter = document.getElementById('timerCounter');
+let scoreCounter = document.getElementById('scoreCounter');
 
 roundNumber.innerText = count;
 
@@ -199,30 +199,25 @@ startButton.addEventListener('click', function () {
 
 })
 
-async function endGame() {
-
-    audioPlayer.pause()
+function endGame() {
+    audioPlayer.pause();
+    
+    const data = new URLSearchParams();
+    data.append('score', score); 
      
-    console.log(`Final Score: ${score}`)
+     const response = fetch('/score', {
+         method: 'POST',
+         headers: {
+             'Content-Type': 'application/x-www-form-urlencoded'
+         },
+         body: data.toString()
 
-    try {
-        const response = await fetch('/score', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: score // Ensure `score` is defined and accessible
-        });
+     })
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+     console.log({ response });
 
-        // window.location.href = '/score';
-    } catch (error) {
-        console.error('Error posting score:', error);
-    }
 
+     window.location.href = '/score';
 }
 
 
