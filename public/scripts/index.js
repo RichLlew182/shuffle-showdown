@@ -45,11 +45,13 @@ function startCountdown(duration) {
     }, 1000); // 1000 milliseconds = 1 second
 }
 
-function stopTimer() {
+function stopTimer(answer) {
     clearInterval(intervalId); 
-    if (timer > 0) {
+    if (timer > 0 && answer === 'correct') {
         score += timer;
+       
     }
+    console.log({score})
     intervalId = null; 
 }
 
@@ -112,8 +114,6 @@ const checkAnswer = async () => {
 
         button.addEventListener('click', () => {
 
-            stopTimer();
-
             answerButtons.forEach((btn) => {
                 btn.setAttribute('disabled', true)
             })
@@ -123,7 +123,7 @@ const checkAnswer = async () => {
             if (answerData === 'true') {
                 button.classList.add('correct');
                 score += 50;
-                console.log({score})
+                stopTimer('correct');
                 
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
@@ -135,6 +135,7 @@ const checkAnswer = async () => {
             }
             else {
                 button.classList.add('incorrect');
+                stopTimer('incorrect');
                 const correctButton = document.querySelector('[data-answer="true"]');
                 correctButton.classList.add('correct');
                 setTimeout(() => {
@@ -192,11 +193,29 @@ startButton.addEventListener('click', function () {
 
 })
 
- function endGame() {
+async function endGame() {
 
-     audioPlayer.pause();
+    audioPlayer.pause()
+     
+    console.log(`Final Score: ${score}`)
 
-    alert('Game Over!')
+    try {
+        const response = await fetch('/score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: score // Ensure `score` is defined and accessible
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // window.location.href = '/score';
+    } catch (error) {
+        console.error('Error posting score:', error);
+    }
 
 }
 

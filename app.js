@@ -116,8 +116,6 @@ const generateQuizData = async () => {
 
     let offset = Math.floor(Math.random() * offsetMax);
 
-    console.log({offset})
-
     // Fetch songs with this offset value
 
     const likedSongs = await getData(`/me/tracks?limit=5&offset=${offset}`);
@@ -131,8 +129,6 @@ const generateQuizData = async () => {
     const artist = likedSongs.items[randomInt].track.artists[0].name;
     const artistID = likedSongs.items[randomInt].track.artists[0]?.id;
     const preview = likedSongs.items[randomInt].track.preview_url;
-
-    console.log({preview})
 
     // fetch related artists using artist ID
 
@@ -180,6 +176,24 @@ app.get('/questions/data', async (req, res) => {
         res.status(500).send(error.message);
     }
 });
+
+let finalScore = ''
+
+app.post('/score', (req, res) => {
+
+    const { score } = req.body;
+    finalScore = score;
+    console.log({ finalScore })
+
+        res.redirect('/score');
+    }
+)
+
+app.get('/score', (req, res) => {
+    res.render('score.ejs', { score: finalScore }); // Render the score page with the score
+});
+
+
 
 
 app.listen(port, () => {

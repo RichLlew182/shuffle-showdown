@@ -110,6 +110,18 @@ a {
     gap: 25px;
 }
 
+.mt-50 {
+    margin-top: 50px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
 section {
     margin: 50px 0;
     background-color: #1f1f1f;
@@ -346,15 +358,7 @@ button,
 @media (min-width: 992px) {
 
     .container {
-        width: 900px;
-    }
-
-}
-
-@media (min-width: 1200px) {
-
-    .container {
-        width: 1100px;
+        width: 800px;
     }
 
 }

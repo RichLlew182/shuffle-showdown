@@ -5,17 +5,17 @@
     <body class="flex column justify-center">
 
 
-        <header class="container flex space-between wrap gap">
+        <header class="container flex column align-center justify-center gap text-center">
             <h1>Name the artist</h1>
+            <h2>The quicker you answer, the higher your score!</h2>
 
-            <button class="btn bg-green" id="playButton" %> >Pause Song </button>
 
 
         </header>
 
         <audio autoplay="false" id="audioPlayer" src=""></audio>
 
-        <section class="container justify-center">
+        <section class="container flex justify-center">
             <div class="visualiser">
                 <div class="line "></div>
                 <div class="line "></div>
@@ -28,15 +28,15 @@
                 <button class="btn bg-white" id="startGame">Get Started</button>
             </div>
 
-            <div class="flex column align-center justify-center">
+            <button class="btn bg-green" id="playButton" %>>Pause Song
+            </button>
+            <div class="flex column align-center justify-center w-100">
                 <h3 id="round">Round <span id="roundNumber"></span>
                 </h3>
                 <h4 id="timeRemaining">Time Remaining: <span id="timeCounter">15</span></h4>
             </div>
 
         </section>
-
-
 
         <script src="/scripts/index.js"></script>
 

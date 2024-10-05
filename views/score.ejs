@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head', { title: 'Final Score | Shuffle Showdown' }) %>
+
+
+
+    <body class="flex column justify-center">
+
+        <section class="container flex column align-center justify-center gap">
+            <h1>Final Score: <%= score %>
+            </h1>
+
+            <div class="flex row gap"> <a class="btn bg-green" href="/questions">Play Again</a><a class="btn bg-white"
+                    href="/leaderboard">View
+                    Leaderboard</a></div>
+
+        </section>
+
+
+
+    </body>
+
+
+</html>
