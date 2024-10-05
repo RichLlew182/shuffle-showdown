@@ -93,6 +93,15 @@ startButton.addEventListener('click', function () {
     startButton.style.display = 'none';
     playButton.style.display = 'block';
 
+    
+    setTimeout(() => {
+        visLines.forEach((line) => {
+            line.classList.add('running')
+        })
+    }, 1000);
+    
+    
+
 
     audioPlayer.addEventListener('loadeddata', () => {
 

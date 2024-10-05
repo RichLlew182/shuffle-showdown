@@ -8,8 +8,9 @@
 body {
     font-family: "Plus Jakarta Sans", sans-serif;
     background-color: var(--black);
-    color: white;
+    color: var(--white);
     font-size: 16px;
+    padding: 50px 0;
 }
 
 h1 {
@@ -53,11 +54,21 @@ h6 {
 }
 
 a {
-    color: white;
+    color: var(--white);
     text-decoration: none;
 }
 
+.bg-white {
+    background-color: var(--white);
+}
 
+.bg-green {
+    background-color: var(--green);
+}
+
+.bg-black {
+    background-color: var(--black);
+}
 
 .flex {
     display: -webkit-box;
@@ -76,6 +87,12 @@ a {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
+}
+
+.align-center {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
 }
 
 .space-between {
@@ -115,9 +132,8 @@ section {
 
 button,
 .btn {
-    background-color: var(--green);
     color: var(--black);
-    border: 1px solid var(--green);
+    border: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -134,8 +150,8 @@ button,
 }
 
 .answer-button {
-    background-color: white;
-    border-color: white;
+    background-color: var(--white);
+    border-color: var(--white);
     text-transform: capitalize;
     min-width: calc(50% - 25px);
     -webkit-box-flex: 1;
@@ -145,13 +161,13 @@ button,
 
 .incorrect {
     background-color: red;
-    color: white;
+    color: var(--white);
     border-color: red;
 }
 
 .correct {
     background-color: var(--green);
-    color: white;
+    color: var(--white);
     border-color: var(--green);
 }
 
@@ -189,31 +205,28 @@ button,
 }
 
 .visualiser {
-    width: 200px;
-    -webkit-box-pack: space-evenly;
-    -ms-flex-pack: space-evenly;
-    justify-content: space-evenly;
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
     height: 150px;
     margin: 0 auto 25px;
-    display: none;
+    gap: 25px;
 }
 
 .line {
-    width: 15px;
+    width: 20px;
     height: 50px;
     background-color: var(--green);
     border-radius: 1rem;
     -webkit-animation-play-state: paused !important;
     animation-play-state: paused !important;
-}
-
-.line.running {
-    -webkit-animation-play-state: paused !important;
-    animation-play-state: paused !important;
-    height: 50px;
 }
 
 .line.running {

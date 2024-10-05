@@ -8,22 +8,25 @@
         <header class="container flex space-between wrap gap">
             <h1>Name the artist</h1>
 
+            <button class="btn bg-green" id="playButton" %> >Pause Song </button>
 
 
-            <button id="playButton" %> >Pause Song </button><button id="startGame">Get Started</button>
         </header>
 
         <audio autoplay="false" loop id="audioPlayer" src=""></audio>
 
         <section class="container justify-center">
             <div class="visualiser">
-                <div class="line running"></div>
-                <div class="line running"></div>
-                <div class="line running"></div>
-                <div class="line running"></div>
-                <div class="line running"></div>
+                <div class="line "></div>
+                <div class="line "></div>
+                <div class="line "></div>
+                <div class="line "></div>
+                <div class="line "></div>
             </div>
-            <div id="artist-answers"></div>
+
+            <div class="flex wrap justify-center align-center" id="artist-answers">
+                <button class="btn bg-white" id="startGame">Get Started</button>
+            </div>
 
         </section>
 
