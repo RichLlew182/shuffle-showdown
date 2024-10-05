@@ -14,7 +14,7 @@
 
         <audio autoplay="false" id="audioPlayer" src=""></audio>
 
-        <section class="container flex justify-center">
+        <section id="questionContainer" class="container flex justify-center">
             <div class="visualiser">
                 <div class="line "></div>
                 <div class="line "></div>
@@ -24,12 +24,12 @@
             </div>
 
             <div class="flex wrap justify-center align-center" id="artist-answers">
-                <button class="btn bg-white" id="startGame">Get Started</button>
+                <a href="#questionContainer" class="btn bg-white" id="startGame">Get Started</a>
             </div>
 
-            <button class="btn bg-green" id="playButton" %>>Pause Song
-            </button>
-            <div id="gameInfo" class="flex row space-between align-center w-100 wrap">
+            <a class="btn bg-green" id="playButton" %>>Pause Song
+            </a>
+            <div id="gameInfo" class="flex column justify-center align-center w-100 text-center">
                 <h3 id="round">Round <span id="roundNumber"></span>
                 </h3>
                 <div>
