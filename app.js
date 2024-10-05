@@ -116,6 +116,8 @@ const generateQuizData = async () => {
 
     let offset = Math.floor(Math.random() * offsetMax);
 
+    console.log({offset})
+
     // Fetch songs with this offset value
 
     const likedSongs = await getData(`/me/tracks?limit=5&offset=${offset}`);
@@ -160,8 +162,8 @@ const generateQuizData = async () => {
 
 app.get('/questions', async (req, res) => {
     try {
-        const { preview } = await generateQuizData();
-        res.render('questions.ejs', { preview });
+        // const { preview } = await generateQuizData();
+        res.render('questions.ejs');
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);
         res.status(500).send(error.message);
