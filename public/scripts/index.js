@@ -18,6 +18,8 @@ roundNumber.innerText = count;
 let intervalId;
 let timer;
 
+let score = 0;
+
 function startCountdown(duration) {
 
      if (intervalId) return;
@@ -26,12 +28,10 @@ function startCountdown(duration) {
     const timeCounter = document.getElementById('timeCounter');
 
     intervalId = setInterval(() => {
-        // Update the timer display
         timeCounter.innerText = timer;
 
-        // Check if the timer has reached zero
         if (timer <= 0) {
-            clearInterval(intervalId); // Stop the timer
+            clearInterval(intervalId); 
             intervalId = null;
             setTimeout(() => {
                 artistAnswers.innerHTML = '';
@@ -46,15 +46,18 @@ function startCountdown(duration) {
 }
 
 function stopTimer() {
-    clearInterval(intervalId); // Clear the existing interval
-    intervalId = null; // Reset the interval ID
+    clearInterval(intervalId); 
+    if (timer > 0) {
+        score += timer;
+    }
+    intervalId = null; 
 }
 
 function resetTimer() {
-    clearInterval(intervalId); // Clear the existing interval
-    intervalId = null; // Reset the interval ID
-    timer = 15; // Reset timer value
-    document.getElementById('timeCounter').innerText = timer; // Update display
+    clearInterval(intervalId); 
+    intervalId = null; 
+    timer = 15;
+    document.getElementById('timeCounter').innerText = timer;
 }
 
 const nextQuestion = async () => {
@@ -82,7 +85,6 @@ const nextQuestion = async () => {
         resetTimer();
         endGame();
     }
-
 
 }
 
@@ -120,6 +122,8 @@ const checkAnswer = async () => {
 
             if (answerData === 'true') {
                 button.classList.add('correct');
+                score += 50;
+                console.log({score})
                 
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
@@ -190,7 +194,7 @@ startButton.addEventListener('click', function () {
 
  function endGame() {
 
-    audioPlayer.pause();
+     audioPlayer.pause();
 
     alert('Game Over!')
 
