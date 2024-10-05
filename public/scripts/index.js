@@ -11,14 +11,20 @@ let visLines = document.querySelectorAll('.line');
 
 let count = 1;
 
+let gameInfo = document.getElementById('gameInfo')
+
 let roundNumber = document.getElementById('roundNumber');
 let timeCounter = document.getElementById('timerCounter')
+let scoreCounter = document.getElementById('scoreCounter')
+
 roundNumber.innerText = count;
 
 let intervalId;
 let timer;
 
 let score = 0;
+
+scoreCounter.innerText = score;
 
 function startCountdown(duration) {
 
@@ -47,9 +53,9 @@ function startCountdown(duration) {
 
 function stopTimer(answer) {
     clearInterval(intervalId); 
-    if (timer > 0 && answer === 'correct') {
+    if (timer > 0 && answer === 'correct') {  
         score += timer;
-       
+        scoreCounter.innerText = score;
     }
     console.log({score})
     intervalId = null; 
@@ -64,13 +70,12 @@ function resetTimer() {
 
 const nextQuestion = async () => {
 
-    if (count <= 3) {
+    if (count <= 10) {
     
     try {
 
         const response = await fetch('/questions/data');
         const { preview, answers } = await response.json();
-        console.log(answers)
 
         audioPlayer.src = preview;
         createAnswerButtons(answers)
@@ -158,6 +163,7 @@ startButton.addEventListener('click', function () {
 
     startButton.style.display = 'none';
     playButton.style.display = 'block';
+    gameInfo.style.display = 'flex'
     
     setTimeout(() => {
         visLines.forEach((line) => {
