@@ -12,16 +12,54 @@ let visLines = document.querySelectorAll('.line');
 let count = 1;
 
 let roundNumber = document.getElementById('roundNumber');
+let timeCounter = document.getElementById('timerCounter')
+roundNumber.innerText = count;
 
-roundNumber.innerText = count
+let intervalId;
+let timer;
 
-console.log(roundNumber)
+function startCountdown(duration) {
 
-console.log(visLines)
+     if (intervalId) return;
+
+    timer = duration;
+    const timeCounter = document.getElementById('timeCounter');
+
+    intervalId = setInterval(() => {
+        // Update the timer display
+        timeCounter.innerText = timer;
+
+        // Check if the timer has reached zero
+        if (timer <= 0) {
+            clearInterval(intervalId); // Stop the timer
+            intervalId = null;
+            setTimeout(() => {
+                artistAnswers.innerHTML = '';
+                    count++;
+                    roundNumber.innerText = count;
+                    nextQuestion();
+            }, 1000);
+        }
+
+        timer--; // Decrement the timer
+    }, 1000); // 1000 milliseconds = 1 second
+}
+
+function stopTimer() {
+    clearInterval(intervalId); // Clear the existing interval
+    intervalId = null; // Reset the interval ID
+}
+
+function resetTimer() {
+    clearInterval(intervalId); // Clear the existing interval
+    intervalId = null; // Reset the interval ID
+    timer = 15; // Reset timer value
+    document.getElementById('timeCounter').innerText = timer; // Update display
+}
 
 const nextQuestion = async () => {
 
-    if (count <=3) {
+    if (count <= 3) {
     
     try {
 
@@ -30,8 +68,9 @@ const nextQuestion = async () => {
         console.log(answers)
 
         audioPlayer.src = preview;
-
         createAnswerButtons(answers)
+        resetTimer();
+        startCountdown(15);
 
         return answers
 
@@ -40,6 +79,7 @@ const nextQuestion = async () => {
     }
         
     } else {
+        resetTimer();
         endGame();
     }
 
@@ -70,6 +110,8 @@ const checkAnswer = async () => {
 
         button.addEventListener('click', () => {
 
+            stopTimer();
+
             answerButtons.forEach((btn) => {
                 btn.setAttribute('disabled', true)
             })
@@ -78,12 +120,13 @@ const checkAnswer = async () => {
 
             if (answerData === 'true') {
                 button.classList.add('correct');
+                
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
                         count++;
-                        roundNumber.innerText = count;
+                    roundNumber.innerText = count;
                         nextQuestion();
-                }, 2000);
+                }, 1000);
 
             }
             else {
@@ -93,9 +136,9 @@ const checkAnswer = async () => {
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
                         count++;
-                        roundNumber.innerText = count;
+                    roundNumber.innerText = count;
                         nextQuestion();
-                }, 2000);
+                }, 1000);
 
             }
         })
@@ -104,30 +147,18 @@ const checkAnswer = async () => {
 
 }
 
-const startButton = document.getElementById('startGame')
+const startButton = document.getElementById('startGame');
 
 startButton.addEventListener('click', function () {
 
     startButton.style.display = 'none';
     playButton.style.display = 'block';
-
     
     setTimeout(() => {
         visLines.forEach((line) => {
             line.classList.add('running')
         })
     }, 1000);
-
-    // audioPlayer.addEventListener('loadeddata', () => {
-
-    //     audioPlayer.play();
-    //     playButton.addEventListener('click', () => {
-    //         audioPlayer.pause();
-
-    //         playButton.textContent = 'Play Song'
-    //     })
-
-    // })
 
     audioPlayer.addEventListener('pause', () => {
 

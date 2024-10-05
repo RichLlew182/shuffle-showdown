@@ -132,6 +132,8 @@ const generateQuizData = async () => {
     const artistID = likedSongs.items[randomInt].track.artists[0]?.id;
     const preview = likedSongs.items[randomInt].track.preview_url;
 
+    console.log({preview})
+
     // fetch related artists using artist ID
 
     let relatedArtists = await getData(`/artists/${artistID}/related-artists`);
@@ -162,7 +164,6 @@ const generateQuizData = async () => {
 
 app.get('/questions', async (req, res) => {
     try {
-        // const { preview } = await generateQuizData();
         res.render('questions.ejs');
     } catch (error) {
         console.error(error.response ? error.response.data : error.message);
