@@ -9,26 +9,89 @@ let artistAnswers = document.getElementById('artist-answers');
 let visualiser = document.querySelector('.visualiser');
 let visLines = document.querySelectorAll('.line');
 
-console.log(visLines)
+let count = 1;
+
+let gameInfo = document.getElementById('gameInfo')
+
+let roundNumber = document.getElementById('roundNumber');
+let timeCounter = document.getElementById('timerCounter');
+let scoreCounter = document.getElementById('scoreCounter');
+
+roundNumber.innerText = count;
+
+let intervalId;
+let timer;
+
+let score = 0;
+
+scoreCounter.innerText = score;
+
+function startCountdown(duration) {
+
+     if (intervalId) return;
+
+    timer = duration;
+    const timeCounter = document.getElementById('timeCounter');
+
+    intervalId = setInterval(() => {
+        timeCounter.innerText = timer;
+
+        if (timer <= 0) {
+            clearInterval(intervalId); 
+            intervalId = null;
+            setTimeout(() => {
+                artistAnswers.innerHTML = '';
+                    count++;
+                    roundNumber.innerText = count;
+                    nextQuestion();
+            }, 1000);
+        }
+
+        timer--; // Decrement the timer
+    }, 1000); // 1000 milliseconds = 1 second
+}
+
+function stopTimer(answer) {
+    clearInterval(intervalId); 
+    if (timer > 0 && answer === 'correct') {  
+        score += timer;
+        scoreCounter.innerText = score;
+    }
+    console.log({score})
+    intervalId = null; 
+}
+
+function resetTimer() {
+    clearInterval(intervalId); 
+    intervalId = null; 
+    timer = 15;
+    document.getElementById('timeCounter').innerText = timer;
+}
 
 const nextQuestion = async () => {
 
+    if (count <= 10) {
+    
     try {
 
         const response = await fetch('/questions/data');
         const { preview, answers } = await response.json();
-        console.log(answers)
 
         audioPlayer.src = preview;
-
         createAnswerButtons(answers)
+        resetTimer();
+        startCountdown(15);
 
         return answers
 
     } catch (error) {
         console.error('Error fetching answers:', error);
     }
-
+        
+    } else {
+        resetTimer();
+        endGame();
+    }
 
 }
 
@@ -64,20 +127,28 @@ const checkAnswer = async () => {
 
             if (answerData === 'true') {
                 button.classList.add('correct');
+                score += 50;
+                stopTimer('correct');
+                
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
-                    nextQuestion()
-                }, 2000);
+                        count++;
+                    roundNumber.innerText = count;
+                        nextQuestion();
+                }, 1000);
 
             }
             else {
                 button.classList.add('incorrect');
+                stopTimer('incorrect');
                 const correctButton = document.querySelector('[data-answer="true"]');
                 correctButton.classList.add('correct');
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
-                    nextQuestion();
-                }, 2000);
+                        count++;
+                    roundNumber.innerText = count;
+                        nextQuestion();
+                }, 1000);
 
             }
         })
@@ -86,24 +157,19 @@ const checkAnswer = async () => {
 
 }
 
-const startButton = document.getElementById('startGame')
+const startButton = document.getElementById('startGame');
 
 startButton.addEventListener('click', function () {
 
     startButton.style.display = 'none';
     playButton.style.display = 'block';
-
-
-    audioPlayer.addEventListener('loadeddata', () => {
-
-        audioPlayer.play();
-        playButton.addEventListener('click', () => {
-            audioPlayer.pause();
-
-            playButton.textContent = 'Play Song'
+    gameInfo.style.display = 'flex'
+    
+    setTimeout(() => {
+        visLines.forEach((line) => {
+            line.classList.add('running')
         })
-
-    })
+    }, 1000);
 
     audioPlayer.addEventListener('pause', () => {
 
@@ -129,15 +195,30 @@ startButton.addEventListener('click', function () {
 
     })
 
-    setTimeout(() => {
-        visualiser.style.display = 'flex';
-    }, 750);
-
-
-
     nextQuestion()
 
 })
+
+function endGame() {
+    audioPlayer.pause();
+    
+    const data = new URLSearchParams();
+    data.append('score', score); 
+     
+     const response = fetch('/score', {
+         method: 'POST',
+         headers: {
+             'Content-Type': 'application/x-www-form-urlencoded'
+         },
+         body: data.toString()
+
+     })
+
+     console.log({ response });
+
+
+     window.location.href = '/score';
+}
 
 
 

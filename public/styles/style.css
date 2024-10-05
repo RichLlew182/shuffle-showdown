@@ -8,8 +8,9 @@
 body {
     font-family: "Plus Jakarta Sans", sans-serif;
     background-color: var(--black);
-    color: white;
+    color: var(--white);
     font-size: 16px;
+    padding: 50px 0;
 }
 
 h1 {
@@ -31,14 +32,6 @@ h4 {
     font-size: 1.728rem;
 }
 
-h5 {
-    font-size: 1.44rem;
-}
-
-h6 {
-    font-size: 1.2rem;
-}
-
 p {
     font-size: 1rem;
 }
@@ -53,11 +46,21 @@ h6 {
 }
 
 a {
-    color: white;
+    color: var(--white);
     text-decoration: none;
 }
 
+.bg-white {
+    background-color: var(--white);
+}
 
+.bg-green {
+    background-color: var(--green);
+}
+
+.bg-black {
+    background-color: var(--black);
+}
 
 .flex {
     display: -webkit-box;
@@ -78,6 +81,12 @@ a {
     justify-content: center;
 }
 
+.align-center {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
 .space-between {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
@@ -91,6 +100,22 @@ a {
 
 .gap {
     gap: 25px;
+}
+
+.mt-25 {
+    margin-top: 25px;
+}
+
+.mt-50 {
+    margin-top: 50px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
 }
 
 section {
@@ -115,13 +140,12 @@ section {
 
 button,
 .btn {
-    background-color: var(--green);
     color: var(--black);
-    border: 1px solid var(--green);
+    border: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    padding: 12px 20px;
+    padding: 12px 25px;
     min-width: 120px;
     cursor: pointer;
     border-radius: 500px;
@@ -134,8 +158,8 @@ button,
 }
 
 .answer-button {
-    background-color: white;
-    border-color: white;
+    background-color: var(--white);
+    border-color: var(--white);
     text-transform: capitalize;
     min-width: calc(50% - 25px);
     -webkit-box-flex: 1;
@@ -145,13 +169,13 @@ button,
 
 .incorrect {
     background-color: red;
-    color: white;
+    color: var(--white);
     border-color: red;
 }
 
 .correct {
     background-color: var(--green);
-    color: white;
+    color: var(--white);
     border-color: var(--green);
 }
 
@@ -183,27 +207,34 @@ button,
     display: none;
 }
 
+#gameInfo {
+    display: none;
+}
+
 .container {
     margin-left: auto;
     margin-right: auto;
 }
 
 .visualiser {
-    width: 200px;
-    -webkit-box-pack: space-evenly;
-    -ms-flex-pack: space-evenly;
-    justify-content: space-evenly;
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
     height: 150px;
     margin: 0 auto 25px;
-    display: none;
+    gap: 25px;
 }
 
 .line {
-    width: 15px;
-    height: 50px;
+    width: 20px;
+    height: 75px;
     background-color: var(--green);
     border-radius: 1rem;
     -webkit-animation-play-state: paused !important;
@@ -211,15 +242,9 @@ button,
 }
 
 .line.running {
-    -webkit-animation-play-state: paused !important;
-    animation-play-state: paused !important;
-    height: 50px;
-}
-
-.line.running {
     -webkit-animation-play-state: running !important;
     animation-play-state: running !important;
-    height: 50px;
+    height: 75px;
 }
 
 .line:nth-child(1) {
@@ -250,7 +275,7 @@ button,
 
 @-webkit-keyframes animateVisualiser {
     0% {
-        height: 50px
+        height: 75px
     }
 
     50% {
@@ -258,14 +283,14 @@ button,
     }
 
     100% {
-        height: 50px
+        height: 75px
     }
 }
 
 
 @keyframes animateVisualiser {
     0% {
-        height: 50px
+        height: 75px
     }
 
     50% {
@@ -273,11 +298,31 @@ button,
     }
 
     100% {
-        height: 50px
+        height: 75px
     }
 }
 
 @media (max-width: 576px) {
+
+    section {
+        padding: 35px;
+    }
+
+    h1 {
+        font-size: 2.074rem;
+    }
+
+    h2 {
+        font-size: 1.728rem;
+    }
+
+    h3 {
+        font-size: 1.44rem;
+    }
+
+    h4 {
+        font-size: 1.2rem;
+    }
 
     .container {
         width: 85%;
@@ -290,6 +335,56 @@ button,
     }
 
 
+    .visualiser {
+        height: 100px;
+        margin: 0 auto 20px;
+        gap: 20px;
+    }
+
+    .line {
+        width: 10px;
+        height: 50px
+    }
+
+    .line.line.running {
+        height: 50px;
+    }
+
+    #gameInfo {
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    @-webkit-keyframes animateVisualiser {
+        0% {
+            height: 50px
+        }
+
+        50% {
+            height: 100px;
+        }
+
+        100% {
+            height: 50px
+        }
+    }
+
+
+    @keyframes animateVisualiser {
+        0% {
+            height: 50px
+        }
+
+        50% {
+            height: 100px;
+        }
+
+        100% {
+            height: 50px
+        }
+    }
 
 }
 
@@ -333,15 +428,7 @@ button,
 @media (min-width: 992px) {
 
     .container {
-        width: 900px;
-    }
-
-}
-
-@media (min-width: 1200px) {
-
-    .container {
-        width: 1100px;
+        width: 800px;
     }
 
 }

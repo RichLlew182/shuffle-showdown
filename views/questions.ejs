@@ -5,29 +5,40 @@
     <body class="flex column justify-center">
 
 
-        <header class="container flex space-between wrap gap">
+        <header class="container flex column align-center justify-center gap text-center">
             <h1>Name the artist</h1>
+            <h2>The quicker you answer, the higher your score!</h2>
 
 
-
-            <button id="playButton" %> >Pause Song </button><button id="startGame">Get Started</button>
         </header>
 
-        <audio autoplay="false" loop id="audioPlayer" src=""></audio>
+        <audio autoplay="false" id="audioPlayer" src=""></audio>
 
-        <section class="container justify-center">
+        <section class="container flex justify-center">
             <div class="visualiser">
-                <div class="line running"></div>
-                <div class="line running"></div>
-                <div class="line running"></div>
-                <div class="line running"></div>
-                <div class="line running"></div>
+                <div class="line "></div>
+                <div class="line "></div>
+                <div class="line "></div>
+                <div class="line "></div>
+                <div class="line "></div>
             </div>
-            <div id="artist-answers"></div>
+
+            <div class="flex wrap justify-center align-center" id="artist-answers">
+                <button class="btn bg-white" id="startGame">Get Started</button>
+            </div>
+
+            <button class="btn bg-green" id="playButton" %>>Pause Song
+            </button>
+            <div id="gameInfo" class="flex row space-between align-center w-100 wrap">
+                <h3 id="round">Round <span id="roundNumber"></span>
+                </h3>
+                <div>
+                    <h4 id="timeRemaining">Time Remaining: <span id="timeCounter">15</span></h4>
+                    <h4 id="scoreTally">Score: <span id="scoreCounter">15</span></h4>
+                </div>
+            </div>
 
         </section>
-
-
 
         <script src="/scripts/index.js"></script>
 
