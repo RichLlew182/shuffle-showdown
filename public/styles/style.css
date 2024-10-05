@@ -5,6 +5,10 @@
     --white: #FFFFFF;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: "Plus Jakarta Sans", sans-serif;
     background-color: var(--black);
