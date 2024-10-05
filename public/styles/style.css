@@ -32,14 +32,6 @@ h4 {
     font-size: 1.728rem;
 }
 
-h5 {
-    font-size: 1.44rem;
-}
-
-h6 {
-    font-size: 1.2rem;
-}
-
 p {
     font-size: 1rem;
 }
@@ -153,7 +145,7 @@ button,
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    padding: 12px 20px;
+    padding: 12px 25px;
     min-width: 120px;
     cursor: pointer;
     border-radius: 500px;
@@ -312,6 +304,26 @@ button,
 
 @media (max-width: 576px) {
 
+    section {
+        padding: 35px;
+    }
+
+    h1 {
+        font-size: 2.074rem;
+    }
+
+    h2 {
+        font-size: 1.728rem;
+    }
+
+    h3 {
+        font-size: 1.44rem;
+    }
+
+    h4 {
+        font-size: 1.2rem;
+    }
+
     .container {
         width: 85%;
     }
@@ -323,6 +335,56 @@ button,
     }
 
 
+    .visualiser {
+        height: 100px;
+        margin: 0 auto 20px;
+        gap: 20px;
+    }
+
+    .line {
+        width: 10px;
+        height: 50px
+    }
+
+    .line.line.running {
+        height: 50px;
+    }
+
+    #gameInfo {
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    @-webkit-keyframes animateVisualiser {
+        0% {
+            height: 50px
+        }
+
+        50% {
+            height: 100px;
+        }
+
+        100% {
+            height: 50px
+        }
+    }
+
+
+    @keyframes animateVisualiser {
+        0% {
+            height: 50px
+        }
+
+        50% {
+            height: 100px;
+        }
+
+        100% {
+            height: 50px
+        }
+    }
 
 }
 
