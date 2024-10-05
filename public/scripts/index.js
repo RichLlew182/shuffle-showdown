@@ -9,10 +9,20 @@ let artistAnswers = document.getElementById('artist-answers');
 let visualiser = document.querySelector('.visualiser');
 let visLines = document.querySelectorAll('.line');
 
+let count = 1;
+
+let roundNumber = document.getElementById('roundNumber');
+
+roundNumber.innerText = count
+
+console.log(roundNumber)
+
 console.log(visLines)
 
 const nextQuestion = async () => {
 
+    if (count <=3) {
+    
     try {
 
         const response = await fetch('/questions/data');
@@ -27,6 +37,10 @@ const nextQuestion = async () => {
 
     } catch (error) {
         console.error('Error fetching answers:', error);
+    }
+        
+    } else {
+        endGame();
     }
 
 
@@ -66,7 +80,9 @@ const checkAnswer = async () => {
                 button.classList.add('correct');
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
-                    nextQuestion()
+                        count++;
+                        roundNumber.innerText = count;
+                        nextQuestion();
                 }, 2000);
 
             }
@@ -76,7 +92,9 @@ const checkAnswer = async () => {
                 correctButton.classList.add('correct');
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
-                    nextQuestion();
+                        count++;
+                        roundNumber.innerText = count;
+                        nextQuestion();
                 }, 2000);
 
             }
@@ -99,20 +117,17 @@ startButton.addEventListener('click', function () {
             line.classList.add('running')
         })
     }, 1000);
-    
-    
 
+    // audioPlayer.addEventListener('loadeddata', () => {
 
-    audioPlayer.addEventListener('loadeddata', () => {
+    //     audioPlayer.play();
+    //     playButton.addEventListener('click', () => {
+    //         audioPlayer.pause();
 
-        audioPlayer.play();
-        playButton.addEventListener('click', () => {
-            audioPlayer.pause();
+    //         playButton.textContent = 'Play Song'
+    //     })
 
-            playButton.textContent = 'Play Song'
-        })
-
-    })
+    // })
 
     audioPlayer.addEventListener('pause', () => {
 
@@ -138,15 +153,17 @@ startButton.addEventListener('click', function () {
 
     })
 
-    setTimeout(() => {
-        visualiser.style.display = 'flex';
-    }, 750);
-
-
-
     nextQuestion()
 
 })
+
+ function endGame() {
+
+    audioPlayer.pause();
+
+    alert('Game Over!')
+
+}
 
 
 
