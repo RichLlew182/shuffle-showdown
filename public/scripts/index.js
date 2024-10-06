@@ -199,25 +199,40 @@ startButton.addEventListener('click', function () {
 
 })
 
-function endGame() {
+async function endGame() {
     audioPlayer.pause();
     
     const data = new URLSearchParams();
     data.append('score', score); 
+
+    try {
+        
+        const response = await fetch('/score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: data.toString()
+    
+        })
+
+        if (response) {
+    
+            console.log({ response });
+            window.location.href = '/score';
+            
+        } else {
+            console.error('Failed to submit score', response.statusText);
+        }
+
+    } catch (error) {
+        console.error('Error during fetch:', error);
+    }
      
-     const response = fetch('/score', {
-         method: 'POST',
-         headers: {
-             'Content-Type': 'application/x-www-form-urlencoded'
-         },
-         body: data.toString()
-
-     })
-
-     console.log({ response });
+    
 
 
-     window.location.href = '/score';
+
 }
 
 
