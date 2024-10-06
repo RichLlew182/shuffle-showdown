@@ -123,7 +123,7 @@ a {
 }
 
 section {
-    margin: 50px 0;
+    margin: 50px auto 0;
     background-color: #1f1f1f;
     padding: 50px;
     border-radius: 25px;
