@@ -182,7 +182,6 @@ app.get('/questions/data', async (req, res) => {
 let finalScore = ''
 
 app.post('/score', (req, res) => {
-    console.log(req.body.score);
 
      finalScore = req.body.score
 
