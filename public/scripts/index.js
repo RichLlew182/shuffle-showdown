@@ -9,7 +9,7 @@ let artistAnswers = document.getElementById('artist-answers');
 let visualiser = document.querySelector('.visualiser');
 let visLines = document.querySelectorAll('.line');
 
-let count = 1;
+let count = 0;
 
 let gameInfo = document.getElementById('gameInfo')
 
@@ -28,7 +28,7 @@ scoreCounter.innerText = score;
 
 function startCountdown(duration) {
 
-     if (intervalId) return;
+    if (intervalId) return;
 
     timer = duration;
     const timeCounter = document.getElementById('timeCounter');
@@ -37,13 +37,11 @@ function startCountdown(duration) {
         timeCounter.innerText = timer;
 
         if (timer <= 0) {
-            clearInterval(intervalId); 
+            clearInterval(intervalId);
             intervalId = null;
             setTimeout(() => {
                 artistAnswers.innerHTML = '';
-                    count++;
-                    roundNumber.innerText = count;
-                    nextQuestion();
+                nextQuestion();
             }, 1000);
         }
 
@@ -52,42 +50,45 @@ function startCountdown(duration) {
 }
 
 function stopTimer(answer) {
-    clearInterval(intervalId); 
-    if (timer > 0 && answer === 'correct') {  
+    clearInterval(intervalId);
+    if (timer > 0 && answer === 'correct') {
         score += timer;
         scoreCounter.innerText = score;
     }
-    console.log({score})
-    intervalId = null; 
+    console.log({ score })
+    intervalId = null;
 }
 
 function resetTimer() {
-    clearInterval(intervalId); 
-    intervalId = null; 
+    clearInterval(intervalId);
+    intervalId = null;
     timer = 15;
     document.getElementById('timeCounter').innerText = timer;
 }
 
 const nextQuestion = async () => {
 
-    if (count <= 10) {
-    
-    try {
+    if (count < 10) {
 
-        const response = await fetch('/questions/data');
-        const { preview, answers } = await response.json();
+        count++;
+        roundNumber.innerText = count;
 
-        audioPlayer.src = preview;
-        createAnswerButtons(answers)
-        resetTimer();
-        startCountdown(15);
+        try {
 
-        return answers
+            const response = await fetch('/questions/data');
+            const { preview, answers } = await response.json();
 
-    } catch (error) {
-        console.error('Error fetching answers:', error);
-    }
-        
+            audioPlayer.src = preview;
+            createAnswerButtons(answers)
+            resetTimer();
+            startCountdown(15);
+
+            return answers
+
+        } catch (error) {
+            console.error('Error fetching answers:', error);
+        }
+
     } else {
         resetTimer();
         endGame();
@@ -129,12 +130,10 @@ const checkAnswer = async () => {
                 button.classList.add('correct');
                 score += 50;
                 stopTimer('correct');
-                
+
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
-                        count++;
-                    roundNumber.innerText = count;
-                        nextQuestion();
+                    nextQuestion();
                 }, 1000);
 
             }
@@ -145,9 +144,7 @@ const checkAnswer = async () => {
                 correctButton.classList.add('correct');
                 setTimeout(() => {
                     artistAnswers.innerHTML = '';
-                        count++;
-                    roundNumber.innerText = count;
-                        nextQuestion();
+                    nextQuestion();
                 }, 1000);
 
             }
@@ -164,7 +161,7 @@ startButton.addEventListener('click', function () {
     startButton.style.display = 'none';
     playButton.style.display = 'block';
     gameInfo.style.display = 'flex'
-    
+
     setTimeout(() => {
         visLines.forEach((line) => {
             line.classList.add('running')
@@ -201,26 +198,26 @@ startButton.addEventListener('click', function () {
 
 async function endGame() {
     audioPlayer.pause();
-    
+
     const data = new URLSearchParams();
-    data.append('score', score); 
+    data.append('score', score);
 
     try {
-        
+
         const response = await fetch('/score', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: data.toString()
-    
+
         })
 
         if (response) {
-    
+
             console.log({ response });
             window.location.href = '/score';
-            
+
         } else {
             console.error('Failed to submit score', response.statusText);
         }
@@ -228,8 +225,8 @@ async function endGame() {
     } catch (error) {
         console.error('Error during fetch:', error);
     }
-     
-    
+
+
 
 
 
