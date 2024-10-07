@@ -54,7 +54,7 @@ To clone and run the app locally, follow these steps:
 - **Node.js**
 - **Express**
 - **EJS**
-- **Spotify Web API**
+- **Axios**
 
 ## License
 
