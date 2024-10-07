@@ -33,10 +33,6 @@ Ensure that you **do not share** your Spotify credentials publicly to maintain a
 To clone and run the app locally, follow these steps:
 
 1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/yourusername/shuffleshowdown.git
-   cd shuffleshowdown
-   ```
 
 2. **Install Dependencies**:
    Make sure you have Node.js installed. Then, run the following command to install all necessary packages:
