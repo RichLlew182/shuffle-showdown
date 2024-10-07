@@ -101,6 +101,8 @@ async function getData(endpoint) {
     return data
 }
 
+
+
 const generateQuizData = async () => {
 
     const userInfo = await getData('/me');
@@ -111,50 +113,67 @@ const generateQuizData = async () => {
 
     //Calculcate offset Max by dividing number of liked songs by 5
 
-    let offsetMax = likedSongsLength -5
+    let offsetMax = likedSongsLength - 5
 
-    // Generate random offset value by muliplying random number between 0 and 1 by offset max
+    let preview = null;
+    let shuffledArray = null;
 
-    let offset = Math.floor(Math.random() * offsetMax);
+    while (!preview) {
 
-    // Fetch songs with this offset value
+        // Generate random offset value by muliplying random number between 0 and 1 by offset max
 
-    const likedSongs = await getData(`/me/tracks?limit=5&offset=${offset}`);
+        let offset = Math.floor(Math.random() * offsetMax);
 
-    // generate number between 1 and 5
+        // Fetch songs with this offset value
 
-    const randomInt = Math.floor(Math.random() * 5);
+        const likedSongs = await getData(`/me/tracks?limit=5&offset=${offset}`);
 
-    // Use random number to pick an artist randomly from the 5 retrieved artists, then store the ID and preview link
+        // generate number between 1 and 5
 
-    const artist = likedSongs.items[randomInt].track.artists[0].name;
-    const artistID = likedSongs.items[randomInt].track.artists[0]?.id;
-    const preview = likedSongs.items[randomInt].track.preview_url;
+        const randomInt = Math.floor(Math.random() * 5);
 
-    // fetch related artists using artist ID
+        // Use random number to pick an artist randomly from the 5 retrieved artists, then store the ID and preview link
 
-    let relatedArtists = await getData(`/artists/${artistID}/related-artists`);
-    relatedArtists = relatedArtists.artists;
+        const track = likedSongs.items[randomInt].track;
 
-    // Shuffle this array so the related artists aren't so close to the original artist
+        preview = likedSongs.items[randomInt].track.preview_url;
 
-    const shuffledArtists = relatedArtists.sort(() => Math.random() - 0.5);
+        if (!preview) {
+            console.log(`No Preview for ${track.name} has been found`)
+            continue;
+        }
 
-    // Add original artist to array as the correct answer
+        const artist = likedSongs.items[randomInt].track.artists[0].name;
+        const artistID = likedSongs.items[randomInt].track.artists[0]?.id;
 
-    const artistArray = [{ name: artist, correct: 'true' }];
+        console.log(`Preview for ${track.name} found`)
 
-    // Add 3 related artists to the artist array
+        // fetch related artists using artist ID
 
-    for (let i = 0; i < 3; i++) {
-        artistArray.push({ name: shuffledArtists[i].name, correct: 'false' });
+        let relatedArtists = await getData(`/artists/${artistID}/related-artists`);
+        relatedArtists = relatedArtists.artists;
+
+        // Shuffle this array so the related artists aren't so close to the original artist
+
+        const shuffledArtists = relatedArtists.sort(() => Math.random() - 0.5);
+
+        // Add original artist to array as the correct answer
+
+        const artistArray = [{ name: artist, correct: 'true' }];
+
+        // Add 3 related artists to the artist array
+
+        for (let i = 0; i < 3; i++) {
+            artistArray.push({ name: shuffledArtists[i].name, correct: 'false' });
+        }
+
+        // Shuffle the Artist array so the correct answer isn't always first
+
+        shuffledArray = artistArray.sort(() => Math.random() - 0.5);
+
+        // return preview url and shuffled array
+
     }
-
-    // Shuffle the Artist array so the correct answer isn't always first
-
-    const shuffledArray = artistArray.sort(() => Math.random() - 0.5);
-
-    // return preview url and shuffled array
 
     return { preview, shuffledArray };
 };
@@ -183,14 +202,14 @@ let finalScore = ''
 
 app.post('/score', (req, res) => {
 
-     finalScore = req.body.score
+    finalScore = req.body.score
 
     res.redirect('/score')
 })
 
 app.get('/score', (req, res) => {
 
-    res.render('score.ejs', {finalScore: finalScore}); // Render the score page with the score
+    res.render('score.ejs', { finalScore: finalScore }); // Render the score page with the score
 });
 
 
