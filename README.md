@@ -14,7 +14,7 @@ Shuffle Showdown is an interactive quiz application built using **Node.js**, **E
 
 1. **User Authentication**: The app authenticates users with Spotify to fetch their liked songs.
 2. **Quiz Creation**: For each round of the quiz, a track and artist are selected. Three related artists are also fetched to provide incorrect answers, making the quiz challenging.
-3. **Gameplay**: Users answer questions based on the artist and track presented in each round.
+3. **Gameplay**: Users hear a preview of the track and try to guess the artist within the time limit.
 4. **Scoring**: At the end of the 10 rounds, users are presented with their score, summarizing their performance in the quiz. For every correct answer, users receive 50 points plus the remaining round time.
 
 ## Development Mode
@@ -47,7 +47,7 @@ To clone and run the app locally, follow these steps:
    ```
 
 4. **Access the App**:
-   Open your web browser and navigate to `http://localhost:3000` (or the appropriate port if configured differently).
+   Open your web browser and navigate to `http://localhost:3000`
 
 ## Dependencies
 
@@ -67,13 +67,3 @@ Contributions are welcome! Feel free to open issues or submit pull requests to i
 ## Acknowledgments
 
 - Thanks to [Spotify Developer](https://developer.spotify.com) for the API access and documentation.
-- Inspired by various music trivia games and quizzes.
-
----
-
-### Preview Notes
-- **Headings** are formatted in bold, and lists are displayed with bullet points.
-- **Code blocks** are shown with syntax highlighting.
-- Links are clickable (when viewed in a Markdown viewer), enhancing usability.
-  
-Feel free to ask if you need any adjustments or further assistance!
