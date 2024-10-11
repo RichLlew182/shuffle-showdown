@@ -22,7 +22,7 @@ Shuffle Showdown is an interactive quiz application built using **Node.js**, **E
 The app is currently in development mode. You can test it using the following credentials:
 
 - **Username**: `shuffleshowdown@outlook.com`
-- **Password**: `Shuffle123!`
+- **Password**: `LetsShuffle123!`
 
 ### Important Note
 
